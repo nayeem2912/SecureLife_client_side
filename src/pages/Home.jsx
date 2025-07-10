@@ -2,6 +2,10 @@ import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Helmet } from 'react-helmet-async';
+import HeroSection from '../components/Section/HeroSection';
+import PopularPolicies from '../components/Section/PopularPolicies';
+import Benefits from '../components/Section/Benefits';
+import CustomerReviews from '../components/Section/CustomerReviews';
 
 const Home = () => {
     useEffect(() => {
@@ -12,20 +16,10 @@ const Home = () => {
             <Helmet>
                 <title>SecureLife | Home</title>
             </Helmet>
-            <h1 className='text-black'>this is home</h1>
-            <h1>this is home</h1>
-            <h1>this is home</h1>
-            <h1>this is home</h1>
-            <h1>this is home</h1>
-            <h1>this is home</h1>
-            <h1>this is home</h1>
-            <h1>this is home</h1>
-            <h1>this is home</h1>
-            <h1>this is home</h1>
-            <h1>this is home</h1>
-            <h1>this is home</h1>
-            <h1>this is home</h1>
-            <h1>this is home</h1>
+            <HeroSection></HeroSection>
+            <PopularPolicies></PopularPolicies>
+            <Benefits></Benefits>
+            <CustomerReviews></CustomerReviews>
         </div>
     );
 };
