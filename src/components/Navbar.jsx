@@ -9,7 +9,7 @@ const Navbar = () => {
   const {user, logOut} = useAuth()
 
    const links = <>
-   <li><NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-lg':'text-lg')} to='/'>Home</NavLink></li>
+   <li><NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl ':'text-xl')} to='/'>Home</NavLink></li>
 			<li><NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-lg':'text-lg')} to='/policies'>All Policies</NavLink></li>
 			<li><NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-lg':'text-lg')} to='/agent'>Agents</NavLink></li>
             <li><NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-lg':'text-lg')} to='/faq'>FAQs</NavLink></li>

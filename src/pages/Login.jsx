@@ -5,6 +5,8 @@ import Logo from "../components/Logo";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
+
 
 const Login = () => {
     const {signIn} = useAuth();
@@ -45,7 +47,13 @@ const Login = () => {
   };
 
   return (
+ 
+    <div>
+      <Helmet>
+        <title>SecureLife | Login</title>
+      </Helmet>
     <div className="min-h-screen  flex items-center justify-center my-10">
+      
       <div className="w-11/12 max-w-md mx-auto bg-white p-8 rounded-xl shadow-lg border border-blue-100 animate-fadeIn">
         
         <div className="text-center mb-6 space-y-4">
@@ -142,6 +150,7 @@ const Login = () => {
         </p>
       </div>
     </div>
+</div>
   );
 };
 

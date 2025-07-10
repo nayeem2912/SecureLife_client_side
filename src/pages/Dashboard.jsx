@@ -39,9 +39,9 @@ const Dashboard = () => {
     <div className="flex-1">
       <ul className="pt-2 pb-4 space-y-1 text-sm">
         <li className="rounded-sm">
-          <a href="#" className="flex items-center p-2 space-x-3 rounded-md hover:bg-gray-200 transition">
+          <a href="/" className="flex items-center p-2 space-x-3 rounded-md hover:bg-gray-200 transition">
             <span>🏠</span>
-            <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-lg':'text-lg')} to='/'>Home</NavLink>
+           <span>Home</span>
           </a>
         </li>
         <li className="rounded-sm">
