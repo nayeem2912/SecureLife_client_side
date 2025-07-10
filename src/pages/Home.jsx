@@ -6,6 +6,9 @@ import HeroSection from '../components/Section/HeroSection';
 import PopularPolicies from '../components/Section/PopularPolicies';
 import Benefits from '../components/Section/Benefits';
 import CustomerReviews from '../components/Section/CustomerReviews';
+import LatestBlogs from '../components/Section/LatestBlogs';
+import NewsletterSubscription from '../components/Section/NewsletterSubscription';
+import MeetOurAgents from '../components/Section/MeetOurAgents';
 
 const Home = () => {
     useEffect(() => {
@@ -20,6 +23,9 @@ const Home = () => {
             <PopularPolicies></PopularPolicies>
             <Benefits></Benefits>
             <CustomerReviews></CustomerReviews>
+            <LatestBlogs></LatestBlogs>
+            <MeetOurAgents></MeetOurAgents>
+            <NewsletterSubscription></NewsletterSubscription>
         </div>
     );
 };
