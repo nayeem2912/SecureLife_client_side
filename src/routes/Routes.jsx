@@ -10,6 +10,7 @@ import Agents from "../pages/Agents";
 import FAQs from "../pages/FAQs";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import Dashboard from "../pages/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -47,4 +48,9 @@ export const router = createBrowserRouter([
       },
     ]
   },
+  {
+    path:'/dashboard',
+    element:<Dashboard></Dashboard>,
+    errorElement:<ErrorPage></ErrorPage>,
+  }
 ]);

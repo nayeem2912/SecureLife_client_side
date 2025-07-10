@@ -3,6 +3,10 @@ import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
 import { useState } from "react";
 import Logo from "../components/Logo";
+import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const Register = () => {
   const {
@@ -10,6 +14,8 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const {createUser,updateUser , setUser} = useAuth();
 
   const [registerError, setRegisterError] = useState("");
   const [photoPreview, setPhotoPreview] = useState(null);
@@ -28,7 +34,37 @@ const Register = () => {
 
     setRegisterError("");
     console.log("Registration Data:", data);
-    // Registration logic (Firebase/Auth or backend call)
+    createUser(data.email, data.password)
+    .then(result => {
+        const user = result.user;
+        const profile= {
+            displayName: data?.name,
+            photoURL:photoPreview
+        }
+        updateUser(profile)
+        .then(() => {
+           setUser({...user,...profile});
+        })
+        .catch(error => {
+          setUser(user)
+          toast.error(error)
+        })
+
+        if(user){
+          Swal.fire({
+  title: "Registration successful!",
+  icon: "success",
+  draggable: true
+});
+        }
+
+    })
+    .catch(error => {
+        const errorCode = error.code;
+    const errorMessage = error.message;
+   toast(errorCode, errorMessage)
+    })
+    
   };
 
   const handleGoogleSignup = () => {
@@ -36,11 +72,15 @@ const Register = () => {
     // Google Auth logic
   };
 
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setPhotoPreview(URL.createObjectURL(file));
-    }
+  const handlePhotoChange = async(e) => {
+    const image = e.target.files[0];
+     const formData = new FormData();
+     formData.append('image', image);
+
+     const imagUploadUrl= `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_key}`
+     const res = await axios.post(imagUploadUrl, formData)
+    setPhotoPreview(res.data.data.url)
+
   };
 
   return (
@@ -77,7 +117,7 @@ const Register = () => {
               type="text"
               placeholder="Enter Your Name"
               {...register("name", { required: "Name is required" })}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-400"
             />
             {errors.name && (
               <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
@@ -91,7 +131,7 @@ const Register = () => {
               type="email"
               placeholder="you@example.com"
               {...register("email", { required: "Email is required" })}
-              className="w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full border border-gray-300 rounded-md px-4 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-sky-400"
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
@@ -110,7 +150,7 @@ const Register = () => {
               className={`w-full border rounded-md px-4 py-2 bg-white text-gray-800 focus:outline-none focus:ring-2 ${
                 registerError
                   ? "border-red-500 focus:ring-red-500"
-                  : "border-gray-300 focus:ring-emerald-500"
+                  : "border-gray-300 focus:ring-sky-400"
               }`}
             />
             {errors.password && (

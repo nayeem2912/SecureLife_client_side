@@ -2,8 +2,12 @@ import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
 import Logo from "../components/Logo";
+import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const Login = () => {
+    const {signIn} = useAuth();
   const {
     register,
     handleSubmit,
@@ -12,7 +16,22 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log("Login Data:", data);
-    // Add your Firebase or backend login logic here
+    signIn(data.email, data.password)
+    .then(result => {
+          const user = result.user;
+          if(user){
+            Swal.fire({
+  title: "Login successful!",
+  icon: "success",
+  draggable: true
+});
+          }
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            toast.error(errorCode ,errorMessage)
+          });
   };
 
   const handleGoogleLogin = () => {
