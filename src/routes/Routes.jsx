@@ -11,6 +11,9 @@ import FAQs from "../pages/FAQs";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
+import PolicyDetails from "../components/Details/PolicyDetails";
+import QuotePage from "../pages/QuotePage";
+import ApplicationForm from "../pages/ApplicationForm";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +48,18 @@ export const router = createBrowserRouter([
       {
         path:'register',
         Component:Register,
+      },
+      {
+        path:'details/:id',
+        Component:PolicyDetails,
+      },
+      {
+        path:'get-quote',
+        Component: QuotePage,
+      },
+      {
+        path:'application',
+        Component: ApplicationForm,
       },
     ]
   },

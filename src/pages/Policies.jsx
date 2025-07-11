@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useState } from 'react';
+import { Link } from 'react-router';
 
 
 const fetchPolicies = async ({ queryKey }) => {
@@ -82,7 +83,9 @@ const Policies = () => {
                 ? policy.shortDescription.slice(0, 70) + '...'
                 : policy.shortDescription}
             </p>
+            <Link to={`/details/${policy._id}`} >
             <button className="mt-3 text-blue-600 underline">View Details</button>
+            </Link>
           </div>
         ))}
       </div>
