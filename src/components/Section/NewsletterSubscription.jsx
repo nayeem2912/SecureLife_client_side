@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -9,27 +10,20 @@ const NewsletterSubscription = () => {
     formState: { errors }
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Newsletter data:", data);
-
-    // 🔄 Backend fetch to save the data (adjust URL later)
-    fetch("https://your-api.com/newsletter", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data)
-    })
-    .then((res) => res.json())
-    .then((result) => {
-      if (result.insertedId || result.success) {
-        toast.success("Subscribed successfully!");
+   const onSubmit = async (data) => {
+    try {
+      const res = await axios.post("http://localhost:5000/subscriptions", data);
+      if (res.data.message) {
+        toast.success(res.data.message);
         reset();
-      } else {
-        toast.error("Failed to subscribe. Try again.");
       }
-    })
-    .catch(() => toast.error("Network error!"));
+    } catch (error) {
+      if (error.response?.status === 409) {
+        toast.error("You are already subscribed!");
+      } else {
+        toast.error("Subscription failed!");
+      }
+    }
   };
 
   return (
