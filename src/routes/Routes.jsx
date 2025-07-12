@@ -66,11 +66,11 @@ export const router = createBrowserRouter([
         Component:BlogDetails,
       },
       {
-        path:'get-quote',
+        path:'get-quote/:id',
         Component: QuotePage,
       },
       {
-        path:'application',
+        path:'application/:id',
         Component: ApplicationForm,
       },
     ]

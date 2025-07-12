@@ -1,14 +1,33 @@
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
+
+const fetchPolicyDetails = async (id) => {
+  const res = await axios.get(`http://localhost:5000/policies/${id}`);
+  return res.data;
+};
 
 const QuotePage = () => {
   const [quote, setQuote] = useState(null);
+  const { id } = useParams();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+
+  const { data: policy, isLoading, error } = useQuery({
+    queryKey: ["policyDetails", id],
+    queryFn: () => fetchPolicyDetails(id),
+  });
+
+  
+
+  if (isLoading) return <p className="text-center py-10">Loading...</p>;
+  if (error) return <p className="text-center text-red-500 py-10">Error loading policy.</p>;
 
   const calculateQuote = ({ age, gender, coverage, duration, smoker }) => {
     const cov = parseInt(coverage) || 0;
@@ -36,6 +55,22 @@ const QuotePage = () => {
       <h2 className="text-2xl font-bold mb-4 text-center bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent">Get a Free Quote</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+
+      <div>
+  <label className="block text-gray-700 mb-1">Policy Name</label>
+  <input
+    type="text"
+    {...register("policyName", { required: true })}
+    defaultValue={policy.title}
+    placeholder="Enter policy name"
+    className="input bg-gray-100 text-gray-800 input-bordered w-full"
+  />
+  {errors.policyName && (
+    <p className="text-red-500 text-sm mt-1">Policy name is required</p>
+  )}
+</div>
+
+
         {/* Age */}
         <div>
           <label className="block  text-gray-700 mb-1">Age</label>
@@ -98,7 +133,7 @@ const QuotePage = () => {
           <h3 className="text-lg text-gray-700 font-semibold  mb-2">Estimated Premium:</h3>
           <p className="text-gray-800">Monthly: <strong>{quote.monthlyPremium} BDT</strong></p>
           <p className="text-gray-800">Annually: <strong>{quote.annualPremium} BDT</strong></p>
-          <Link to='/application'>
+          <Link to={`/application/${policy._id}`}>
           <button className="btn text-white bg-gradient-to-b from-sky-400 to-blue-600 mt-4">Apply for Policy</button></Link>
         </div>
       )}

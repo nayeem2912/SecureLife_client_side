@@ -2,14 +2,34 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { useParams } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchPolicyDetails = async (id) => {
+  const res = await axios.get(`http://localhost:5000/policies/${id}`);
+  return res.data;
+};
 
 const ApplicationForm = () => {
+  const { id } = useParams();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors }
   } = useForm();
+
+
+  const { data: policy, isLoading, error } = useQuery({
+    queryKey: ["policyDetails", id],
+    queryFn: () => fetchPolicyDetails(id),
+  });
+
+  
+
+  if (isLoading) return <p className="text-center py-10">Loading...</p>;
+  if (error) return <p className="text-center text-red-500 py-10">Error loading policy.</p>;
+
 
   const onSubmit = async (data) => {
     const applicationData = {
@@ -37,6 +57,21 @@ const ApplicationForm = () => {
       <h2 className="text-2xl font-semibold mb-6 text-center bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent">Insurance Application Form</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+
+        <div>
+  <label className="block text-gray-700 font-medium text-lg mb-1">Policy Name</label>
+  <input
+    type="text"
+    {...register("policyName", { required: true })}
+    defaultValue={policy.title}
+    placeholder="Enter policy name"
+    className="input bg-gray-100 text-gray-800 input-bordered w-full"
+  />
+  {errors.policyName && (
+    <p className="text-red-500 text-sm mt-1">Policy name is required</p>
+  )}
+</div>
+
 
         {/* Personal Info */}
         <div>

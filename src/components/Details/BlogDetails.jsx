@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import dayjs from "dayjs";
 
 const fetchBlogById = async (id) => {
   const res = await axios.get(`http://localhost:5000/blogs/${id}`);
@@ -20,26 +21,51 @@ const BlogDetails = () => {
   if (isError) return <div className="text-center text-red-500 py-10">Error loading blog.</div>;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
-      <h1 className="text-3xl font-bold mb-4 text-blue-800">{blog.title}</h1>
+   <div className="max-w-5xl mx-auto px-5 py-10 bg-white shadow-md rounded-lg animate-fadeIn my-10">
+      {/* Blog Header */}
+      <h1 className="text-4xl font-bold text-gray-800 mb-4">{blog.title}</h1>
 
-      <div className="flex items-center gap-3 mb-4">
-        <img src={blog.authorImage} alt={blog.authorName} className="w-10 h-10 rounded-full" />
+      {/* Author Info */}
+      <div className="flex items-center gap-4 mb-6">
+        {blog.authorImage && (
+          <img src={blog.authorImage} alt="Author" className="w-12 h-12 rounded-full border" />
+        )}
         <div>
-          <p className="text-sm font-medium text-gray-700">{blog.authorName}</p>
-          <p className="text-xs text-gray-500">{new Date(blog.publishDate).toLocaleDateString()}</p>
+          <p className="text-gray-700 font-semibold">{blog.authorName}</p>
+          <p className="text-sm text-gray-500">{dayjs(blog.publishDate).format("MMMM D, YYYY")}</p>
         </div>
       </div>
 
+      {/* Main Image */}
       <img
         src={blog.image}
         alt={blog.title}
-        className="w-full max-h-[400px] object-cover rounded-lg shadow mb-6"
+        className="w-full h-80 object-cover rounded-lg shadow mb-8"
       />
 
-      <p className="text-gray-700 text-lg leading-relaxed">{blog.content}</p>
+      {/* Blog Content */}
+      <div className="text-lg text-gray-800 leading-relaxed space-y-4">
+        {blog.content.split("\n").map((para, i) => (
+          <p key={i}>{para}</p>
+        ))}
+      </div>
 
-      
+      {/* Extra Info */}
+      {blog.tags && blog.tags.length > 0 && (
+        <div className="mt-8">
+          <h3 className="text-xl font-semibold mb-2 text-gray-700">Tags</h3>
+          <div className="flex flex-wrap gap-2">
+            {blog.tags.map((tag, i) => (
+              <span
+                key={i}
+                className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
