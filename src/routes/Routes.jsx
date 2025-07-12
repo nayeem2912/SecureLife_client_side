@@ -25,6 +25,7 @@ import ClaimRequest from "../pages/CustomerPage/ClaimRequest";
 import MyPolicies from "../pages/CustomerPage/MyPolicies";
 import PaymentPage from "../pages/CustomerPage/PaymentPage";
 import Blog from "../pages/Blog";
+import BlogDetails from "../components/Details/BlogDetails";
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
       {
         path:'details/:id',
         Component:PolicyDetails,
+      },
+      {
+        path:'blogs/:id',
+        Component:BlogDetails,
       },
       {
         path:'get-quote',
