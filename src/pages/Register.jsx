@@ -33,9 +33,17 @@ const Register = () => {
     }
 
     setRegisterError("");
-    console.log("Registration Data:", data);
     createUser(data.email, data.password)
-    .then(result => {
+    .then( async  (result) => {
+
+         const userInfo = {
+                    email: data.email,
+                    role: 'user', 
+                    created_at: new Date().toISOString(),
+                    last_log_in: new Date().toISOString()
+                }
+       const userRes = await axios.post('http://localhost:5000/users', userInfo);     
+
         const user = result.user;
         const profile= {
             displayName: data?.name,

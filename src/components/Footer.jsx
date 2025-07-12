@@ -8,7 +8,7 @@ const Footer = () => {
   <aside>
     <Logo></Logo>
     <p>
-    <span className='font-semibold mr-2 text-xl'>Address:</span>  123, Travel Street, Gulshan-2, Dhaka-1212, Bangladesh
+    <span className='font-semibold mr-2 text-xl'>Address:</span>  123, Gulshan-2, Dhaka-1212, Bangladesh
     </p>
     <p>
       <span className='font-semibold mr-2 text-xl'>Phone:</span>
@@ -16,7 +16,7 @@ const Footer = () => {
     </p>
     <p >
       <span className='font-semibold mr-2 text-xl'>Email:</span>
-         info@travelmania.com
+         info@SecureLife.com
     </p>
   </aside>
    <nav>
@@ -66,7 +66,7 @@ const Footer = () => {
 </footer>
 <footer className="footer bg-base-200 sm:footer-horizontal footer-center text-base-content p-4">
   <aside>
-    <p className=' '>Copyright © {new Date().getFullYear()} - All right reserved by Travel Mania</p>
+    <p className=' '>Copyright © {new Date().getFullYear()} - All right reserved by Secure Life</p>
   </aside>
 </footer>
         </div>

@@ -12,21 +12,21 @@ const MeetOurAgents = () => {
         name: "Sarah Ahmed",
         experience: 5,
         specialties: ["Life Insurance", "Retirement Planning"],
-        photo: "https://i.ibb.co/KzC5PYZ/agent1.jpg",
+        photo: "",
       },
       {
         id: 2,
         name: "Rafiq Islam",
         experience: 8,
         specialties: ["Health & Term Insurance", "Family Plans"],
-        photo: "https://i.ibb.co/g6kqT0P/agent2.jpg",
+        photo: "",
       },
       {
         id: 3,
         name: "Nasrin Jahan",
         experience: 6,
         specialties: ["Child Plans", "Investment-linked Policies"],
-        photo: "https://i.ibb.co/jfKdNcz/agent3.jpg",
+        photo: "",
       },
     ]);
   }, []);

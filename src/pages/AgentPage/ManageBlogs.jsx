@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Agents = () => {
+const ManageBlogs = () => {
     return (
         <div>
-            this is agent.
+            blog
         </div>
     );
 };
 
-export default Agents;
+export default ManageBlogs;
