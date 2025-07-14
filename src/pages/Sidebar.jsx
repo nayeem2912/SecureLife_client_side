@@ -118,7 +118,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/dashboard/payment-status">
+              <Link to={`/dashboard/payment/${user.email}`}>
                 <FaMoneyCheck className="inline mr-2" /> Payment Status
               </Link>
             </li>

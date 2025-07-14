@@ -35,6 +35,7 @@ const MyPolicies = () => {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
+  const [rejectionReason, setRejectionReason] = useState("");
 
   const {
     data: applications = [],
@@ -48,6 +49,16 @@ const MyPolicies = () => {
     },
     enabled: !!user?.email
   });
+
+  const fetchRejectionReason = async (applicationId) => {
+    try {
+      const res = await axios.get(`http://localhost:5000/applications/rejection/${applicationId}`);
+      setRejectionReason(res.data.reason || "No reason provided.");
+    } catch (err) {
+      console.error("Failed to fetch rejection reason", err);
+      setRejectionReason("No reason provided.");
+    }
+  };
 
   const handleReviewSubmit = async () => {
     if (!rating || !feedback) {
@@ -75,6 +86,14 @@ const MyPolicies = () => {
     }
   };
 
+  const openReviewModal = async (app) => {
+    setSelectedPolicy(app);
+    if (app.status === "Rejected") {
+      await fetchRejectionReason(app._id);
+    }
+    setShowReviewModal(true);
+  };
+
   if (isLoading) return <p className="text-center">Loading...</p>;
 
   return (
@@ -92,82 +111,111 @@ const MyPolicies = () => {
           </tr>
         </thead>
         <tbody>
-  {applications.map((app) => (
-    <tr key={app._id}>
-      <td>{app.policyName}</td>
-      <td>{app.coverage}</td>
-      <td>{app.duration}</td>
-      <td>{app.premium} BDT</td>
-      <td>
-        <span className={`px-2 py-1 rounded text-white text-xs ${
-          app.status === "Approved"
-            ? "bg-green-500"
-            : app.status === "Rejected"
-            ? "bg-red-500"
-            : "bg-sky-500"
-        }`}>
-          {app.status}
-        </span>
-      </td>
-      <td className="space-x-2">
-        <button
-          className={`btn btn-sm btn-outline ${app.status !== "Approved" ? "btn-disabled opacity-50 cursor-not-allowed" : ""}`}
-          onClick={() => {
-            if (app.status === "Approved") {
-              setSelectedPolicy(app);
-              setShowReviewModal(true);
-            }
-          }}
-          disabled={app.status !== "Approved"}
-        >
-          Give Review
-        </button>
-
-        <PDFDownloadLink
-          document={<PolicyPDF policy={app} />}
-          fileName={`Policy_${app.policyName}.pdf`}
-        >
-          {({ loading }) => (
-            <button
-              className={`btn btn-sm bg-blue-600 text-white ${app.status !== "Approved" ? "btn-disabled opacity-50 cursor-not-allowed" : ""}`}
-              disabled={app.status !== "Approved"}
-            >
-              {loading ? "Loading..." : "Download Policy"}
-            </button>
-          )}
-        </PDFDownloadLink>
-      </td>
-    </tr>
-  ))}
-</tbody>
-
+          {applications.map((app) => (
+            <tr key={app._id}>
+              <td>{app.policyName}</td>
+              <td>{app.coverage}</td>
+              <td>{app.duration}</td>
+              <td>{app.premium} BDT</td>
+              <td>
+                <span className={`px-2 py-1 rounded text-white text-xs ${
+                  app.status === "Approved"
+                    ? "bg-green-500"
+                    : app.status === "Rejected"
+                    ? "bg-red-500"
+                    : "bg-yellow-500"
+                }`}>
+                  {app.status}
+                </span>
+              </td>
+              <td className="space-x-2">
+                {app.status === "Approved" ? (
+                  <>
+                    <button
+                      className="btn btn-sm btn-outline"
+                      onClick={() => openReviewModal(app)}
+                    >
+                      Give Review
+                    </button>
+                    <PDFDownloadLink
+                      document={<PolicyPDF policy={app} />}
+                      fileName={`Policy_${app.policyName}.pdf`}
+                    >
+                      {({ loading }) => (
+                        <button className="btn btn-sm bg-blue-600 text-white">
+                          {loading ? "Loading..." : "Download Policy"}
+                        </button>
+                      )}
+                    </PDFDownloadLink>
+                  </>
+                ) : app.status === "Rejected" ? (
+                  <button
+                    className="btn btn-sm btn-warning"
+                    onClick={() => openReviewModal(app)}
+                  >
+                    View Feedback
+                  </button>
+                ) : (
+                  <>
+                    <button className="btn btn-sm btn-outline" disabled>
+                      Give Review
+                    </button>
+                    <button className="btn btn-sm bg-blue-600 text-white" disabled>
+                      Download Policy
+                    </button>
+                  </>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
 
-      {/* Review Modal */}
+      {/* Review/Feedback Modal */}
       {showReviewModal && (
         <dialog id="review-modal" open className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-lg">Submit Review</h3>
-            <div className="flex gap-1 py-2">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <FaStar
-                  key={star}
-                  className={`cursor-pointer ${star <= rating ? "text-yellow-500" : "text-gray-300"}`}
-                  onClick={() => setRating(star)}
-                />
-              ))}
-            </div>
-            <textarea
-              value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
-              className="textarea textarea-bordered w-full"
-              rows="3"
-              placeholder="Write your feedback here"
-            ></textarea>
+            <h3 className="font-bold text-lg">
+              {selectedPolicy?.status === "Rejected" ? "Rejection Reason" : "Submit Review"}
+            </h3>
+
+            {selectedPolicy?.status === "Rejected" ? (
+              <div className="bg-red-100 text-red-700 p-3 rounded mb-2">
+                <strong>Reason:</strong><br /> {rejectionReason}
+              </div>
+            ) : (
+              <>
+                <div className="flex gap-1 py-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <FaStar
+                      key={star}
+                      className={`cursor-pointer ${star <= rating ? "text-yellow-500" : "text-gray-300"}`}
+                      onClick={() => setRating(star)}
+                    />
+                  ))}
+                </div>
+                <textarea
+                  value={feedback}
+                  onChange={(e) => setFeedback(e.target.value)}
+                  className="textarea textarea-bordered w-full"
+                  rows="3"
+                  placeholder="Write your review here"
+                ></textarea>
+              </>
+            )}
+
             <div className="modal-action">
               <form method="dialog" className="flex gap-2">
-                <button className="btn" onClick={() => setShowReviewModal(false)}>Cancel</button>
-                <button type="button" onClick={handleReviewSubmit} className="btn bg-blue-600 text-white">Submit</button>
+                <button className="btn" onClick={() => setShowReviewModal(false)}>Close</button>
+                {selectedPolicy?.status === "Approved" && (
+                  <button
+                    type="button"
+                    onClick={handleReviewSubmit}
+                    className="btn bg-blue-600 text-white"
+                  >
+                    Submit
+                  </button>
+                )}
               </form>
             </div>
           </div>

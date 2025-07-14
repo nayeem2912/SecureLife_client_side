@@ -14,7 +14,7 @@ import PolicyDetails from "../components/Details/PolicyDetails";
 import QuotePage from "../pages/QuotePage";
 import ApplicationForm from "../pages/ApplicationForm";
 import Dashboard from "../layout/Dashboard";
-import ManageApplication from "../pages/AdminPage/ManageApplication";
+
 import ManagePolicies from "../pages/AdminPage/ManagePolicies";
 import ManageTransactions from "../pages/AdminPage/ManageTransactions";
 import ManageUsers from "../pages/AdminPage/ManageUsers";
@@ -23,9 +23,11 @@ import ManageBlogs from "../pages/AgentPage/ManageBlogs";
 import PolicyClearance from "../pages/AgentPage/PolicyClearance";
 import ClaimRequest from "../pages/CustomerPage/ClaimRequest";
 import MyPolicies from "../pages/CustomerPage/MyPolicies";
-import PaymentPage from "../pages/CustomerPage/PaymentPage";
+
 import Blog from "../pages/Blog";
 import BlogDetails from "../components/Details/BlogDetails";
+import PaymentStatus from "../pages/CustomerPage/PaymentStatus";
+import ManageApplications from "../pages/AdminPage/ManageApplications";
 
 export const router = createBrowserRouter([
   {
@@ -82,7 +84,7 @@ export const router = createBrowserRouter([
     children:[
       {
       path: "manage-applications",
-      element: <ManageApplication></ManageApplication>
+      element: <ManageApplications></ManageApplications>
       },
       {
       path: "manage-policies",
@@ -93,7 +95,7 @@ export const router = createBrowserRouter([
       element: <ManageTransactions></ManageTransactions>
       },
       {
-      path: "manage-user",
+      path: "manage-users",
       element: <ManageUsers></ManageUsers>
       },
       {
@@ -117,8 +119,12 @@ export const router = createBrowserRouter([
       element: <MyPolicies></MyPolicies>
       },
       {
-      path: "payment",
-      element: <PaymentPage></PaymentPage>
+      path: "payment/:email",
+      element: <PaymentStatus></PaymentStatus>
+      },
+      {
+      path: "payment/:email",
+      element: <PaymentStatus></PaymentStatus>
       },
 
     ]
