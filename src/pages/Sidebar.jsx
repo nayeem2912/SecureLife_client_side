@@ -10,7 +10,7 @@ import useRole from '../hooks/useRole';
 
 
 const Sidebar = () => {
-  const { logOut} = useAuth()
+  const { logOut, user} = useAuth()
   const { role, isLoading } = useRole();
   const [isActive, setActive] = useState(false)
   const handleToggle = () => {
@@ -113,7 +113,7 @@ const Sidebar = () => {
         {role === "user" && (
           <>
             <li>
-              <Link to="/dashboard/my-policies">
+              <Link to={`/dashboard/my-policies/${user.email}`}>
                 <FaBlog className="inline mr-2" /> My Policies
               </Link>
             </li>

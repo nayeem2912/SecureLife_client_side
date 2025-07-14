@@ -113,7 +113,7 @@ export const router = createBrowserRouter([
       element: <ClaimRequest></ClaimRequest>
       },
       {
-      path: "my-policies",
+      path: "my-policies/:email",
       element: <MyPolicies></MyPolicies>
       },
       {
