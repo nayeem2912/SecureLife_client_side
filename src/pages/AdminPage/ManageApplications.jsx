@@ -10,7 +10,6 @@ const ManageApplications = () => {
   const [rejectReason, setRejectReason] = useState("");
   const [selectedApp, setSelectedApp] = useState(null);
 
-  // Applications fetch using react-query
   const {
     data: applications = [],
     isLoading: appsLoading,
@@ -23,7 +22,6 @@ const ManageApplications = () => {
     },
   });
 
-  // Agents fetch using react-query
   const {
     data: agents = [],
     isLoading: agentsLoading,
@@ -36,28 +34,26 @@ const ManageApplications = () => {
     },
   });
 
-  // Approve handler: check agent select first
-  const handleApprove = async (appId) => {
+  const handleAssignAgent = async (appId) => {
     const selectedEmail = selectedAgents[appId];
     if (!selectedEmail) {
-      return Swal.fire( "Please select an agent before approving");
+      return Swal.fire("Error", "Please select an agent", "error");
     }
 
     try {
       await axios.patch(`http://localhost:5000/applications/${appId}/assign`, {
         agentEmail: selectedEmail,
       });
-      Swal.fire("Application approved successfully");
+      Swal.fire("Success", "Agent assigned successfully", "success");
       refetchApplications();
     } catch (err) {
-      Swal.fire("Failed to approve", err.message || err);
+      Swal.fire("Error", "Failed to assign agent", err.message || err);
     }
   };
 
-  // Reject handler with reason
   const handleReject = async () => {
     if (!rejectReason) {
-      return Swal.fire( "Please provide rejection reason");
+      return Swal.fire("Error", "Please provide rejection reason", "error");
     }
 
     try {
@@ -67,17 +63,19 @@ const ManageApplications = () => {
           reason: rejectReason,
         }
       );
-      Swal.fire( "Application rejected");
+      Swal.fire("Rejected", "Application rejected", "success");
       setShowRejectModal(false);
       setRejectReason("");
       refetchApplications();
     } catch (err) {
-      Swal.fire("Failed to reject", err.message || err);
+      Swal.fire("Error", "Failed to reject", err.message || err);
     }
   };
 
-  if (appsLoading || agentsLoading) return <p className="text-center">Loading...</p>;
-  if (agentsError) return <p className="text-center text-red-500">Failed to load agents</p>;
+  if (appsLoading || agentsLoading)
+    return <p className="text-center">Loading...</p>;
+  if (agentsError)
+    return <p className="text-center text-red-500">Failed to load agents</p>;
 
   return (
     <div className="p-4 overflow-x-auto">
@@ -91,19 +89,18 @@ const ManageApplications = () => {
             <th>Applied At</th>
             <th>Status</th>
             <th>Agent</th>
-            <th>Actions</th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th>Assign</th>
+            <th>Reject</th>
+            <th>View</th>
           </tr>
         </thead>
         <tbody>
           {applications.map((app, index) => {
-            // Match assigned agent details if assigned
             const assignedAgent = app.agentEmail
               ? agents.find(
                   (agent) =>
-                    agent.email.trim().toLowerCase() === app.agentEmail.trim().toLowerCase()
+                    agent.email.trim().toLowerCase() ===
+                    app.agentEmail.trim().toLowerCase()
                 )
               : null;
 
@@ -123,7 +120,7 @@ const ManageApplications = () => {
                       app.status === "Approved"
                         ? "bg-green-500"
                         : app.status === "Rejected"
-                        ? "bg-red-500"
+                        ? "bg-red-600"
                         : "bg-yellow-500"
                     }`}
                   >
@@ -134,71 +131,60 @@ const ManageApplications = () => {
                   {assignedAgent ? (
                     <div>
                       <div>{assignedAgent.name}</div>
-                      <div className="text-xs text-gray-500">{assignedAgent.email}</div>
+                      <div className="text-xs text-gray-500">
+                        {assignedAgent.email}
+                      </div>
                     </div>
                   ) : (
                     <em className="text-gray-400 italic">No Agent Assigned</em>
                   )}
                 </td>
-                <td className="space-y-2">
-  {app.status === "Pending" && (
-    <>
-      {/* Agent Select on separate line */}
-      <div className="mb-2">
-        <select
-          className="select select-bordered w-40 max-w-xs"
-          onChange={(e) =>
-            setSelectedAgents({
-              ...selectedAgents,
-              [app._id]: e.target.value,
-            })
-          }
-          value={selectedAgents[app._id] || ""}
-        >
-          <option value="">Select Agent</option>
-          {agents.map((agent) => (
-            <option key={agent._id} value={agent.email}>
-              {agent.name} ({agent.email})
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* Approve/Reject buttons on new line */}
-     
-    </>
-  )}
-
- 
-</td>
-<td>
-     <div className="flex gap-2">
-        <button
-          className="btn btn-xs btn-success flex-1"
-          onClick={() => handleApprove(app._id)}
-        >
-          Approve
-        </button>
-        <button
-          className="btn btn-xs btn-error flex-1"
-          onClick={() => {
-            setRejectId(app._id);
-            setShowRejectModal(true);
-          }}
-        >
-          Reject
-        </button>
-      </div>
-</td>
-<td>
- <button
-    className="btn btn-xs btn-outline w-full "
-    onClick={() => setSelectedApp(app)}
-  >
-    View
-  </button>
-</td>
-
+                <td>
+                  <select
+                    className="select select-bordered w-40 max-w-xs"
+                    onChange={(e) =>
+                      setSelectedAgents({
+                        ...selectedAgents,
+                        [app._id]: e.target.value,
+                      })
+                    }
+                    value={selectedAgents[app._id] || ""}
+                  >
+                    <option value="">Select Agent</option>
+                    {agents.map((agent) => (
+                      <option key={agent._id} value={agent.email}>
+                        {agent.name} ({agent.email})
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    className="btn btn-xs border-none bg-gradient-to-b from-sky-400 to-blue-600
+ text-white w-full mt-2"
+                    onClick={() => handleAssignAgent(app._id)}
+                  >
+                    Assign
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="btn btn-xs bg-red-600 text-white w-full"
+                    onClick={() => {
+                      setRejectId(app._id);
+                      setShowRejectModal(true);
+                    }}
+                  >
+                    Reject
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="btn btn-xs border-none bg-gradient-to-b from-sky-400 to-blue-600
+ text-white btn-outline w-full"
+                    onClick={() => setSelectedApp(app)}
+                  >
+                    View
+                  </button>
+                </td>
               </tr>
             );
           })}
@@ -218,7 +204,10 @@ const ManageApplications = () => {
             ></textarea>
             <div className="modal-action">
               <form method="dialog" className="flex gap-2">
-                <button className="btn" onClick={() => setShowRejectModal(false)}>
+                <button
+                  className="btn"
+                  onClick={() => setShowRejectModal(false)}
+                >
                   Cancel
                 </button>
                 <button
@@ -234,7 +223,7 @@ const ManageApplications = () => {
         </dialog>
       )}
 
-      {/* View Details Modal */}
+      {/* View Modal */}
       {selectedApp && (
         <dialog id="viewAppModal" open className="modal">
           <div className="modal-box max-w-lg">

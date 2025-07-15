@@ -1,12 +1,11 @@
-// Blog.jsx
+
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-// import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import dayjs from "dayjs";
 
+
 const Blog = () => {
-//   const [selectedBlog, setSelectedBlog] = useState(null);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 

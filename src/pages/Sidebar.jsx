@@ -82,11 +82,7 @@ const Sidebar = () => {
                 <FaMoneyCheck className="inline mr-2" /> Transactions
               </Link>
             </li>
-            <li>
-              <Link to="/dashboard/manage-agents">
-                <FaUsers className="inline mr-2" /> Manage Agents
-              </Link>
-            </li>
+            
           </>
         )}
 

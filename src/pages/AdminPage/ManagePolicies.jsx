@@ -40,12 +40,12 @@ const ManagePolicies = () => {
       const formData = new FormData();
       formData.append("image", imageFile);
 
-      const imgbbRes = await axios.post(
+      const photoRes = await axios.post(
         `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_key}`,
         formData
       );
 
-      const imageUrl = imgbbRes.data.data.url;
+      const imageUrl = photoRes.data.data.url;
 
       const policyData = {
         ...data,
@@ -92,7 +92,8 @@ const ManagePolicies = () => {
   return (
     <div className="p-4 max-w-5xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">Manage Policies</h2>
-      <button className="btn mb-4" onClick={() => { setEditingPolicy(null); reset(); setShowModal(true); }}>Add New Policy</button>
+      <button className="btn mb-4 bg-gradient-to-b from-sky-400 to-blue-600
+ text-white" onClick={() => { setEditingPolicy(null); reset(); setShowModal(true); }}>Add New Policy</button>
 
       <table className="table w-full">
         <thead>
@@ -114,8 +115,9 @@ const ManagePolicies = () => {
               <td>{p.coverage}</td>
               <td>{p.basePremium}</td>
               <td>
-                <button className="btn btn-sm btn-outline" onClick={() => handleEdit(p)}>Edit</button>
-                <button className="btn btn-sm btn-error ml-2" onClick={() => handleDelete(p._id)}>Delete</button>
+                <button className="btn btn-sm bg-gradient-to-b from-sky-400 to-blue-600
+ text-white btn-outline" onClick={() => handleEdit(p)}>Edit</button>
+                <button className="btn btn-sm bg-red-500 text-white ml-2" onClick={() => handleDelete(p._id)}>Delete</button>
               </td>
             </tr>
           ))}
@@ -140,7 +142,8 @@ const ManagePolicies = () => {
               <input type="number" step="0.01" {...register("basePremium", { required: true })} className="input input-bordered w-full" placeholder="Base Premium Rate" />
               <input type="file" {...register("image", { required: !editingPolicy })} className="file-input file-input-bordered w-full" />
               <div className="modal-action">
-                <button type="submit" className="btn bg-blue-600 text-white">{editingPolicy ? "Update" : "Add"}</button>
+                <button type="submit" className="btn bg-gradient-to-b from-sky-400 to-blue-600
+  text-white">{editingPolicy ? "Update" : "Add"}</button>
                 <button type="button" onClick={() => setShowModal(false)} className="btn">Cancel</button>
               </div>
             </form>

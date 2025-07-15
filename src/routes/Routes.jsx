@@ -99,11 +99,11 @@ export const router = createBrowserRouter([
       element: <ManageUsers></ManageUsers>
       },
       {
-      path: "assigned-customer",
+      path: "assigned-customers",
       element: <AssignedCustomers></AssignedCustomers>
       },
       {
-      path: "manage-blog",
+      path: "manage-blogs",
       element: <ManageBlogs></ManageBlogs>
       },
       {
