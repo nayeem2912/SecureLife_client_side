@@ -44,10 +44,10 @@ const ManageApplications = () => {
       await axios.patch(`http://localhost:5000/applications/${appId}/assign`, {
         agentEmail: selectedEmail,
       });
-      Swal.fire("Success", "Agent assigned successfully", "success");
+      Swal.fire( "Agent assigned successfully");
       refetchApplications();
     } catch (err) {
-      Swal.fire("Error", "Failed to assign agent", err.message || err);
+      Swal.fire( "Failed to assign agent", err.message || err);
     }
   };
 

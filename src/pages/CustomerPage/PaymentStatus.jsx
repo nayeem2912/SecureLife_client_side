@@ -40,8 +40,8 @@ const PaymentStatus = () => {
               <td>monthly</td>
               
               <td>
-                <span className={`px-2 py-1 rounded text-white text-xs ${
-                  policy.paymentStatus === "Paid" ? "bg-green-500" : "bg-red-500"
+                <span className={`px-2 py-1 rounded text-white text-sm ${
+                  policy.paymentStatus === "Paid" ? "bg-green-500" : "bg-red-600"
                 }`}>
                   {policy.paymentStatus}
                 </span>
@@ -49,8 +49,9 @@ const PaymentStatus = () => {
               <td>
                 {policy.paymentStatus === "unpaid" && (
                   <button
-                    className="btn btn-sm btn-primary"
-                    onClick={() => navigate(`/payment/${policy._id}`)}
+                    className="btn btn-sm bg-gradient-to-b from-sky-400 to-blue-600
+ text-white"
+                    onClick={() => navigate(`/dashboard/pay/${policy._id}`)}
                   >
                     Pay Now
                   </button>

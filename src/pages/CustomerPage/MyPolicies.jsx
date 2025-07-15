@@ -1,4 +1,3 @@
-// MyPolicies.jsx
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
@@ -33,9 +32,12 @@ const MyPolicies = () => {
   const { user } = useAuth();
   const [selectedPolicy, setSelectedPolicy] = useState(null);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showClaimModal, setShowClaimModal] = useState(false);
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
   const [rejectionReason, setRejectionReason] = useState("");
+  const [claimReason, setClaimReason] = useState("");
+  const [claimFile, setClaimFile] = useState(null);
 
   const {
     data: applications = [],
@@ -86,12 +88,41 @@ const MyPolicies = () => {
     }
   };
 
+  const handleClaimSubmit = async () => {
+    if (!claimReason || !claimFile) {
+      return Swal.fire("Error", "Please provide a reason and upload a file.", "error");
+    }
+
+    const formData = new FormData();
+    formData.append("applicationId", selectedPolicy._id);
+    formData.append("email", user.email);
+    formData.append("reason", claimReason);
+    formData.append("file", claimFile);
+
+    try {
+      await axios.post("http://localhost:5000/claims", formData);
+      Swal.fire("Success", "Claim submitted", "success");
+      setShowClaimModal(false);
+      setClaimFile(null);
+      setClaimReason("");
+      refetchApplications();
+    } catch (err) {
+      console.error(err);
+      Swal.fire("Error", "Failed to submit claim", "error");
+    }
+  };
+
   const openReviewModal = async (app) => {
     setSelectedPolicy(app);
     if (app.status === "Rejected") {
       await fetchRejectionReason(app._id);
     }
     setShowReviewModal(true);
+  };
+
+  const openClaimForm = (app) => {
+    setSelectedPolicy(app);
+    setShowClaimModal(true);
   };
 
   if (isLoading) return <p className="text-center">Loading...</p>;
@@ -107,6 +138,7 @@ const MyPolicies = () => {
             <th>Duration</th>
             <th>Premium</th>
             <th>Status</th>
+            <th>Claim</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -127,6 +159,13 @@ const MyPolicies = () => {
                 }`}>
                   {app.status}
                 </span>
+              </td>
+              <td>
+                {app.claimStatus === "Approved" && <span className="badge badge-success">Approved</span>}
+                {app.claimStatus === "Pending" && <span className="badge badge-warning">Pending</span>}
+                {!app.claimStatus && app.status === "Approved" && (
+                  <button className="btn btn-sm" onClick={() => openClaimForm(app)}>Claim</button>
+                )}
               </td>
               <td className="space-x-2">
                 {app.status === "Approved" ? (
@@ -216,6 +255,40 @@ const MyPolicies = () => {
                     Submit
                   </button>
                 )}
+              </form>
+            </div>
+          </div>
+        </dialog>
+      )}
+
+      {/* Claim Modal */}
+      {showClaimModal && (
+        <dialog id="claim-modal" open className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Submit Claim</h3>
+            <input
+              type="text"
+              placeholder="Reason for Claim"
+              value={claimReason}
+              onChange={(e) => setClaimReason(e.target.value)}
+              className="input input-bordered w-full mb-3"
+            />
+            <input
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png"
+              onChange={(e) => setClaimFile(e.target.files[0])}
+              className="file-input file-input-bordered w-full"
+            />
+            <div className="modal-action">
+              <form method="dialog" className="flex gap-2">
+                <button className="btn" onClick={() => setShowClaimModal(false)}>Cancel</button>
+                <button
+                  type="button"
+                  onClick={handleClaimSubmit}
+                  className="btn bg-blue-600 text-white"
+                >
+                  Submit
+                </button>
               </form>
             </div>
           </div>
