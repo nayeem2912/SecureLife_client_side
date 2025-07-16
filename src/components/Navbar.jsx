@@ -15,6 +15,7 @@ const Navbar = () => {
 			<li><NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to='/blog'>Blogs</NavLink></li>
             <li><NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to='/faq'>FAQs</NavLink></li>
             <li><NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to='/dashboard'>Dashboard</NavLink></li>
+            <li><NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to='/profile'>Profile</NavLink></li>
    </>
    const link = <>
    <li><NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-lg':'text-lg')} to='/'>Home</NavLink></li>

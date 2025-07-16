@@ -28,6 +28,7 @@ import PaymentStatus from "../pages/CustomerPage/PaymentStatus";
 import ManageApplications from "../pages/AdminPage/ManageApplications";
 import PayPolicy from "../pages/CustomerPage/PayPolicy";
 import ClaimRequestPage from "../pages/CustomerPage/ClaimRequestPage";
+import UserProfile from "../pages/UserProfile";
 
 
 export const router = createBrowserRouter([
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
       {
         path:'register',
         Component:Register,
+      },
+      {
+        path:'profile',
+        Component: UserProfile,
       },
       {
         path:'details/:id',

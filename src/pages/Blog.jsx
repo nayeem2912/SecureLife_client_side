@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Link, useNavigate } from "react-router";
 import dayjs from "dayjs";
+import { Helmet } from "react-helmet-async";
 
 
 const Blog = () => {
@@ -35,6 +36,9 @@ const Blog = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
+      <Helmet>
+                      <title>SecureLife | Blog</title>
+                  </Helmet>
       <h2 className="text-3xl font-bold mb-6">Latest Blog Articles</h2>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {blogs.map((blog) => (
