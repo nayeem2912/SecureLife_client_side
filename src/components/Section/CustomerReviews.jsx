@@ -1,82 +1,59 @@
+// CustomerReviews.jsx
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { FaStar } from 'react-icons/fa';
-
-const reviews = [
-  {
-    name: "Sarah Johnson",
-    image: "https://i.pravatar.cc/150?img=12",
-    rating: 5,
-    message: "SecureLife made buying insurance easy and fast. Highly recommend!"
-  },
-  {
-    name: "Michael Brown",
-    image: "https://i.pravatar.cc/150?img=20",
-    rating: 4,
-    message: "The dashboard is user-friendly and support is great!"
-  },
-  {
-    name: "Emily White",
-    image: "https://i.pravatar.cc/150?img=30",
-    rating: 5,
-    message: "Quick quote calculation and smooth experience. Loved it!"
-  },
-  {
-    name: "David Lee",
-    image: "https://i.pravatar.cc/150?img=40",
-    rating: 5,
-    message: "I could track my claims in real-time. This platform rocks!"
-  },
-  {
-    name: "Ava Smith",
-    image: "https://i.pravatar.cc/150?img=50",
-    rating: 4,
-    message: "Very modern and easy-to-use platform. Recommended!"
-  }
-];
 
 const CustomerReviews = () => {
+  const { data: reviews = [], isLoading } = useQuery({
+    queryKey: ["customerReviews"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:5000/reviews");
+      return res.data;
+    },
+  });
+
+  if (isLoading) return <p className="text-center">Loading...</p>;
+
   return (
-    <section className="py-12  px-4 md:px-8 lg:px-16">
-      <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-sky-500 to-blue-600 text-transparent bg-clip-text">
-        What Our Customers Say
-      </h2>
-
-      <div className="max-w-lg mx-auto">
-        <Carousel
-          showThumbs={false}
-          showStatus={false}
-          autoPlay
-          infiniteLoop
-          interval={5000}
-          showArrows={true}
-        >
-          {reviews.map((review, index) => (
-            <div
-              key={index}
-              className="bg-white shadow-md p-6 rounded-xl border border-blue-100"
-            >
-              <div className="flex items-center justify-center mb-4">
-                <img
-                  src={review.image}
-                  alt={review.name}
-                  className="w-40 h-70 rounded border-4 border-blue-400"
-                />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 text-center">{review.name}</h3>
-
-              <div className="flex justify-center mt-2 mb-4 text-yellow-500">
-                {[...Array(review.rating)].map((_, i) => (
-                  <FaStar key={i} />
-                ))}
-              </div>
-
-              <p className="text-gray-600 text-center max-w-lg mx-auto italic">“{review.message}”</p>
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <h2 className="text-2xl font-bold mb-6 text-center">Customer Reviews</h2>
+      <Carousel
+        showArrows
+        infiniteLoop
+        autoPlay
+        interval={4000}
+        showThumbs={false}
+        centerMode
+        centerSlidePercentage={35}
+        showStatus={false}
+        className="center-slide"
+      >
+        {reviews.map((review) => (
+          <div key={review._id} className="review-card bg-white p-6 rounded-lg shadow-md text-center">
+            <img
+              src={review.photo || "/default-avatar.png"}
+              alt={review.name}
+              className="w-50 h-60 mx-auto rounded-full mb-3"
+            />
+            <h3 className="text-lg font-semibold mb-1">{review.name}</h3>
+            <div className="flex justify-center mb-2">
+              {[...Array(5)].map((_, i) => (
+                <svg
+                  key={i}
+                  className={`w-5 h-5 ${i < review.rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.262 3.89a1 1 0 00.95.69h4.104c.969 0 1.371 1.24.588 1.81l-3.32 2.412a1 1 0 00-.364 1.118l1.262 3.89c.3.921-.755 1.688-1.54 1.118l-3.32-2.413a1 1 0 00-1.175 0l-3.32 2.413c-.784.57-1.838-.197-1.539-1.118l1.261-3.89a1 1 0 00-.364-1.118L2.097 9.317c-.783-.57-.38-1.81.588-1.81h4.105a1 1 0 00.95-.69l1.262-3.89z" />
+                </svg>
+              ))}
             </div>
-          ))}
-        </Carousel>
-      </div>
-    </section>
+            <p className="text-sm text-gray-600">{review.feedback}</p>
+          </div>
+        ))}
+      </Carousel>
+    </div>
   );
 };
 

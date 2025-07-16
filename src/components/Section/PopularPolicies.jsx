@@ -1,51 +1,40 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const PopularPolicies = () => {
-  const [policies, setPolicies] = useState([]);
+  const { data: policies = [], isLoading } = useQuery({
+    queryKey: ["popularPolicies"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:5000/popular-policies");
+      return res.data;
+    },
+  });
 
-  useEffect(() => {
-    fetch("/api/popular-policies") // তুমি এখানে তোমার API endpoint বসাবে
-      .then((res) => res.json())
-      .then((data) => {
-        const top6 = data
-          .sort((a, b) => b.popularity - a.popularity)
-          .slice(0, 6);
-        setPolicies(top6);
-      });
-  }, []);
+  if (isLoading) return <p className="text-center">Loading popular policies...</p>;
 
   return (
-    <section className="py-12 px-4 md:px-8 lg:px-16 ">
-      <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent">
-        Most Popular Policies
-      </h2>
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {policies.map((policy) => (
-          <div
-            key={policy._id}
-            className="bg-white border border-gray-200 rounded-lg shadow-md p-5 hover:shadow-xl transition duration-300"
-          >
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">{policy.title}</h3>
-            <p className="text-sm text-gray-600 mb-1">
-              <span className="font-medium">Coverage:</span> ${policy.coverageAmount}
-            </p>
-            <p className="text-sm text-gray-600 mb-1">
-              <span className="font-medium">Duration:</span> {policy.termDuration} years
-            </p>
-            <p className="text-sm text-gray-600 mb-4">
-              <span className="font-medium">Popularity:</span> {policy.popularity}+
-            </p>
-            <Link
-              to={`/policy/${policy._id}`}
-              className="inline-block mt-auto px-4 py-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded hover:scale-105 transition-transform"
-            >
-              View Details
-            </Link>
+    <div className="p-6 max-w-6xl mx-auto">
+      <h2 className="text-3xl font-bold mb-6 text-center"> Popular Policies</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {policies.map((policy, idx) => (
+          <div key={idx} className="card bg-base-100 shadow-xl border">
+            <div className="card-body">
+              <h3 className="text-xl font-bold">{policy.name}</h3>
+              <p><strong>Coverage:</strong> {policy.coverage}</p>
+              <p><strong>Duration:</strong> {policy.duration}</p>
+              <p><strong>Purchased:</strong> {policy.purchaseCount} times</p>
+              <div className="card-actions justify-end">
+                <Link to={`/details/${(policy._id)}`} className="btn btn-sm bg-gradient-to-b from-sky-400 to-blue-600
+ text-white">
+                  View Details
+                </Link>
+              </div>
+            </div>
           </div>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

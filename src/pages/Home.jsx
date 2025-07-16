@@ -8,7 +8,7 @@ import Benefits from '../components/Section/Benefits';
 import CustomerReviews from '../components/Section/CustomerReviews';
 import LatestBlogs from '../components/Section/LatestBlogs';
 import NewsletterSubscription from '../components/Section/NewsletterSubscription';
-import MeetOurAgents from '../components/Section/MeetOurAgents';
+import AgentSection from '../components/Section/AgentSection';
 
 const Home = () => {
     useEffect(() => {
@@ -24,7 +24,7 @@ const Home = () => {
             <Benefits></Benefits>
             <CustomerReviews></CustomerReviews>
             <LatestBlogs></LatestBlogs>
-            <MeetOurAgents></MeetOurAgents>
+            <AgentSection></AgentSection>
             <NewsletterSubscription></NewsletterSubscription>
         </div>
     );

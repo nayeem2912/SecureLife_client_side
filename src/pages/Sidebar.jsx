@@ -99,8 +99,8 @@ const Sidebar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/dashboard/add-blog">
-                <FaBlog className="inline mr-2" /> Add Blog
+              <Link to="/dashboard/policies-clearance">
+                <FaBlog className="inline mr-2" /> Policy Clearance
               </Link>
             </li>
           </>

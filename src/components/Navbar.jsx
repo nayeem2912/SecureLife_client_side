@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 const Navbar = () => {
   const {user, logOut} = useAuth()
+  
 
    const links = <>
    <li><NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl ':'text-xl')} to='/'>Home</NavLink></li>

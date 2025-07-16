@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { PDFDownloadLink, Document, Page, Text, StyleSheet } from "@react-pdf/renderer";
 import { FaStar } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const styles = StyleSheet.create({
   page: { padding: 30 },
@@ -57,6 +58,7 @@ const MyPolicies = () => {
     const reviewData = {
       email: user.email,
       name: user.displayName,
+      photo:user.photoURL,
       policyName: selectedPolicy.policyName,
       rating,
       feedback,
@@ -65,13 +67,13 @@ const MyPolicies = () => {
 
     try {
       await axios.post("http://localhost:5000/reviews", reviewData);
-      Swal.fire("Success", "Review submitted", "success");
+      Swal.fire("Review submitted");
       setShowReviewModal(false);
       setFeedback("");
       setRating(0);
       refetchApplications();
     } catch (err) {
-      console.error(err);
+      toast(err)
     }
   };
 
