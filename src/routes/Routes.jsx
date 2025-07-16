@@ -21,15 +21,13 @@ import ManageUsers from "../pages/AdminPage/ManageUsers";
 import AssignedCustomers from "../pages/AgentPage/AssignedCustomers";
 import ManageBlogs from "../pages/AgentPage/ManageBlogs";
 import PolicyClearance from "../pages/AgentPage/PolicyClearance";
-import ClaimRequest from "../pages/CustomerPage/ClaimForm";
 import MyPolicies from "../pages/CustomerPage/MyPolicies";
-
 import Blog from "../pages/Blog";
 import BlogDetails from "../components/Details/BlogDetails";
 import PaymentStatus from "../pages/CustomerPage/PaymentStatus";
 import ManageApplications from "../pages/AdminPage/ManageApplications";
 import PayPolicy from "../pages/CustomerPage/PayPolicy";
-import ClaimForm from "../pages/CustomerPage/ClaimForm";
+import ClaimRequestPage from "../pages/CustomerPage/ClaimRequestPage";
 
 
 export const router = createBrowserRouter([
@@ -114,8 +112,8 @@ export const router = createBrowserRouter([
       element: <PolicyClearance></PolicyClearance>
       },
       {
-      path: "claim-request",
-      element: <ClaimForm></ClaimForm>
+      path: "claim-request/:email",
+      element: <ClaimRequestPage></ClaimRequestPage>
       },
       {
       path: "my-policies/:email",

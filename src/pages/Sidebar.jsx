@@ -119,7 +119,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li>
-              <Link to="/dashboard/claim-request">
+              <Link to={`/dashboard/claim-request/${user.email}`}>
                 <FaUserShield className="inline mr-2" /> Claim Request
               </Link>
             </li>

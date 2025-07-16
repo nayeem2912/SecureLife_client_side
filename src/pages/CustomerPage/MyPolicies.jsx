@@ -31,13 +31,10 @@ const PolicyPDF = ({ policy }) => (
 const MyPolicies = () => {
   const { user } = useAuth();
   const [selectedPolicy, setSelectedPolicy] = useState(null);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
-  const [showClaimModal, setShowClaimModal] = useState(false);
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
-  const [rejectionReason, setRejectionReason] = useState("");
-  const [claimReason, setClaimReason] = useState("");
-  const [claimFile, setClaimFile] = useState(null);
 
   const {
     data: applications = [],
@@ -51,16 +48,6 @@ const MyPolicies = () => {
     },
     enabled: !!user?.email
   });
-
-  const fetchRejectionReason = async (applicationId) => {
-    try {
-      const res = await axios.get(`http://localhost:5000/applications/rejection/${applicationId}`);
-      setRejectionReason(res.data.reason || "No reason provided.");
-    } catch (err) {
-      console.error("Failed to fetch rejection reason", err);
-      setRejectionReason("No reason provided.");
-    }
-  };
 
   const handleReviewSubmit = async () => {
     if (!rating || !feedback) {
@@ -88,41 +75,14 @@ const MyPolicies = () => {
     }
   };
 
-  const handleClaimSubmit = async () => {
-    if (!claimReason || !claimFile) {
-      return Swal.fire("Error", "Please provide a reason and upload a file.", "error");
-    }
-
-    const formData = new FormData();
-    formData.append("applicationId", selectedPolicy._id);
-    formData.append("email", user.email);
-    formData.append("reason", claimReason);
-    formData.append("file", claimFile);
-
-    try {
-      await axios.post("http://localhost:5000/claims", formData);
-      Swal.fire("Success", "Claim submitted", "success");
-      setShowClaimModal(false);
-      setClaimFile(null);
-      setClaimReason("");
-      refetchApplications();
-    } catch (err) {
-      console.error(err);
-      Swal.fire("Error", "Failed to submit claim", "error");
-    }
+  const openDetailsModal = (app) => {
+    setSelectedPolicy(app);
+    setShowDetailsModal(true);
   };
 
-  const openReviewModal = async (app) => {
+  const openReviewModal = (app) => {
     setSelectedPolicy(app);
-    if (app.status === "Rejected") {
-      await fetchRejectionReason(app._id);
-    }
     setShowReviewModal(true);
-  };
-
-  const openClaimForm = (app) => {
-    setSelectedPolicy(app);
-    setShowClaimModal(true);
   };
 
   if (isLoading) return <p className="text-center">Loading...</p>;
@@ -138,8 +98,9 @@ const MyPolicies = () => {
             <th>Duration</th>
             <th>Premium</th>
             <th>Status</th>
-            <th>Claim</th>
-            <th>Actions</th>
+            <th></th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -161,47 +122,39 @@ const MyPolicies = () => {
                 </span>
               </td>
               <td>
-                {app.claimStatus === "Approved" && <span className="badge badge-success">Approved</span>}
-                {app.claimStatus === "Pending" && <span className="badge badge-warning">Pending</span>}
-                {!app.claimStatus && app.status === "Approved" && (
-                  <button className="btn btn-sm" onClick={() => openClaimForm(app)}>Claim</button>
+                 <button className="btn btn-sm w-25" onClick={() => openDetailsModal(app)}>View Details</button>
+              </td>
+              <td>
+                {app.status === "Approved" ? (
+                  <>
+                    <button className="btn btn-sm w-25  btn-outline" onClick={() => openReviewModal(app)}>Give Review</button>
+                    
+                  </>
+                ) : (
+                  <>
+                    <button className="btn w-25  btn-sm btn-outline" disabled>Give Review</button>
+                
+                  </>
                 )}
               </td>
               <td className="space-x-2">
+               
                 {app.status === "Approved" ? (
                   <>
-                    <button
-                      className="btn btn-sm btn-outline"
-                      onClick={() => openReviewModal(app)}
-                    >
-                      Give Review
-                    </button>
                     <PDFDownloadLink
                       document={<PolicyPDF policy={app} />}
                       fileName={`Policy_${app.policyName}.pdf`}
                     >
                       {({ loading }) => (
-                        <button className="btn btn-sm bg-blue-600 text-white">
+                        <button className="btn btn-sm text-xs bg-green-600 w-30 text-white">
                           {loading ? "Loading..." : "Download Policy"}
                         </button>
                       )}
                     </PDFDownloadLink>
                   </>
-                ) : app.status === "Rejected" ? (
-                  <button
-                    className="btn btn-sm btn-warning"
-                    onClick={() => openReviewModal(app)}
-                  >
-                    View Feedback
-                  </button>
                 ) : (
                   <>
-                    <button className="btn btn-sm btn-outline" disabled>
-                      Give Review
-                    </button>
-                    <button className="btn btn-sm bg-blue-600 text-white" disabled>
-                      Download Policy
-                    </button>
+                    <button className="btn btn-sm w-30 bg-green-600 text-white" disabled>Download Policy</button>
                   </>
                 )}
               </td>
@@ -210,84 +163,52 @@ const MyPolicies = () => {
         </tbody>
       </table>
 
-      {/* Review/Feedback Modal */}
-      {showReviewModal && (
-        <dialog id="review-modal" open className="modal">
+      {/* Details Modal */}
+      {showDetailsModal && (
+        <dialog id="details-modal" open className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-lg">
-              {selectedPolicy?.status === "Rejected" ? "Rejection Reason" : "Submit Review"}
-            </h3>
-
-            {selectedPolicy?.status === "Rejected" ? (
-              <div className="bg-red-100 text-red-700 p-3 rounded mb-2">
-                <strong>Reason:</strong><br /> {rejectionReason}
-              </div>
-            ) : (
-              <>
-                <div className="flex gap-1 py-2">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <FaStar
-                      key={star}
-                      className={`cursor-pointer ${star <= rating ? "text-yellow-500" : "text-gray-300"}`}
-                      onClick={() => setRating(star)}
-                    />
-                  ))}
-                </div>
-                <textarea
-                  value={feedback}
-                  onChange={(e) => setFeedback(e.target.value)}
-                  className="textarea textarea-bordered w-full"
-                  rows="3"
-                  placeholder="Write your review here"
-                ></textarea>
-              </>
-            )}
-
-            <div className="modal-action">
-              <form method="dialog" className="flex gap-2">
-                <button className="btn" onClick={() => setShowReviewModal(false)}>Close</button>
-                {selectedPolicy?.status === "Approved" && (
-                  <button
-                    type="button"
-                    onClick={handleReviewSubmit}
-                    className="btn bg-blue-600 text-white"
-                  >
-                    Submit
-                  </button>
-                )}
-              </form>
-            </div>
+            <h3 className="font-bold text-lg">Policy Details</h3>
+            <p className="mb-2">Policy: {selectedPolicy?.policyName}</p>
+            <p className="mb-2">Coverage: {selectedPolicy?.coverage}</p>
+            <p className="mb-2">Duration: {selectedPolicy?.duration}</p>
+            <p className="mb-2">Premium: {selectedPolicy?.premium} BDT</p>
+            <form method="dialog" className="modal-action">
+              <button className="btn" onClick={() => setShowDetailsModal(false)}>Close</button>
+            </form>
           </div>
         </dialog>
       )}
 
-      {/* Claim Modal */}
-      {showClaimModal && (
-        <dialog id="claim-modal" open className="modal">
+      {/* Review Modal */}
+      {showReviewModal && (
+        <dialog id="review-modal" open className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-lg">Submit Claim</h3>
-            <input
-              type="text"
-              placeholder="Reason for Claim"
-              value={claimReason}
-              onChange={(e) => setClaimReason(e.target.value)}
-              className="input input-bordered w-full mb-3"
-            />
-            <input
-              type="file"
-              accept=".pdf,.jpg,.jpeg,.png"
-              onChange={(e) => setClaimFile(e.target.files[0])}
-              className="file-input file-input-bordered w-full"
-            />
+            <h3 className="font-bold text-lg">Submit Review</h3>
+            <div className="flex gap-1 py-2">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <FaStar
+                  key={star}
+                  className={`cursor-pointer ${star <= rating ? "text-yellow-500" : "text-gray-300"}`}
+                  onClick={() => setRating(star)}
+                />
+              ))}
+            </div>
+            <textarea
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+              className="textarea textarea-bordered w-full"
+              rows="3"
+              placeholder="Write your review here"
+            ></textarea>
             <div className="modal-action">
               <form method="dialog" className="flex gap-2">
-                <button className="btn" onClick={() => setShowClaimModal(false)}>Cancel</button>
+                <button className="btn" onClick={() => setShowReviewModal(false)}>Close</button>
                 <button
                   type="button"
-                  onClick={handleClaimSubmit}
+                  onClick={handleReviewSubmit}
                   className="btn bg-blue-600 text-white"
                 >
-                  Submit
+                  Submit Review
                 </button>
               </form>
             </div>
