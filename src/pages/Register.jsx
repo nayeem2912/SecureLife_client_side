@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import Logo from "../components/Logo";
 import useAuth from "../hooks/useAuth";
@@ -15,7 +15,8 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const {createUser,updateUser , setUser} = useAuth();
+  const {createUser,updateUser , setUser, googleSignIn} = useAuth();
+  const navigate = useNavigate()
 
   const [registerError, setRegisterError] = useState("");
   const [photoPreview, setPhotoPreview] = useState(null);
@@ -54,6 +55,7 @@ const Register = () => {
         updateUser(profile)
         .then(() => {
            setUser({...user,...profile});
+           navigate("/")
         })
         .catch(error => {
           setUser(user)
@@ -78,7 +80,35 @@ const Register = () => {
   };
 
   const handleGoogleSignup = () => {
-    
+    googleSignIn()
+      .then( async (result) => {
+        const user = result.user;
+         const userInfo = {
+                    email: user.email,
+                    name: user.displayName,
+                    photoURL:user.photoURL,
+                    role: 'user', 
+                    created_at: new Date().toISOString(),
+                    last_log_in: new Date().toISOString()
+                }
+
+                const userRes = await axios.post('http://localhost:5000/users', userInfo);
+                
+         if(user){
+            Swal.fire({
+  title: "Registration successful!",
+  icon: "success",
+  draggable: true
+});
+          }
+           navigate("/")
+      })
+       
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        toast.error(errorCode ,errorMessage)
+      })
   };
 
   const handlePhotoChange = async(e) => {

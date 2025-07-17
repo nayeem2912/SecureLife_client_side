@@ -6,13 +6,13 @@ import Swal from "sweetalert2";
 const UserProfileCard = ({ users }) => {
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(users.name);
-  const [photo, setPhoto] = useState(users.photoURL);
+  const [photoURL, setPhoto] = useState(users.photoURL);
 
   const updateProfile = useMutation({
     mutationFn: async () => {
       await axios.patch(`http://localhost:5000/users/${users.email}`, {
         name,
-        photo,
+        photoURL,
       });
     },
     onSuccess: () => {
@@ -28,7 +28,7 @@ const UserProfileCard = ({ users }) => {
     <div className="border p-4 rounded shadow mb-4">
       <div className="flex items-center gap-4">
         <img
-          src={photo || "/default-avatar.png"}
+          src={photoURL || "/default-avatar.png"}
           alt={name}
           className="w-16 h-16 rounded-full border"
         />
@@ -42,7 +42,7 @@ const UserProfileCard = ({ users }) => {
               />
               <input
                 className="input input-bordered w-full"
-                value={photo}
+                value={photoURL}
                 onChange={(e) => setPhoto(e.target.value)}
               />
             </>

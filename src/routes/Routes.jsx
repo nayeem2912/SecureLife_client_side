@@ -30,6 +30,7 @@ import PayPolicy from "../pages/CustomerPage/PayPolicy";
 import ClaimRequestPage from "../pages/CustomerPage/ClaimRequestPage";
 import UserProfile from "../pages/UserProfile";
 import DashboardHome from "../components/DashboardHome";
+import PrivateRouter from "../contexts/PrivateRouter";
 
 
 export const router = createBrowserRouter([
@@ -64,11 +65,11 @@ export const router = createBrowserRouter([
       },
       {
         path:'profile',
-        Component: UserProfile,
+       element: <PrivateRouter> <UserProfile></UserProfile> </PrivateRouter>
       },
       {
         path:'details/:id',
-        Component:PolicyDetails,
+        element: <PrivateRouter><PolicyDetails></PolicyDetails> </PrivateRouter> ,
       },
       {
         path:'blogs/:id',
@@ -76,66 +77,67 @@ export const router = createBrowserRouter([
       },
       {
         path:'get-quote/:id',
-        Component: QuotePage,
+        element: <PrivateRouter> <QuotePage></QuotePage> </PrivateRouter>
       },
       {
         path:'application/:id',
-        Component: ApplicationForm,
+        element: <PrivateRouter> <ApplicationForm></ApplicationForm>   </PrivateRouter>
       },
     ]
   },
   {
     path:'/dashboard',
-    element:<Dashboard></Dashboard>,
+    element: <PrivateRouter><Dashboard></Dashboard></PrivateRouter> ,
     errorElement:<ErrorPage></ErrorPage>,
     children:[
       {
        index:true,
-       element:<DashboardHome></DashboardHome>
+       element: <PrivateRouter> <DashboardHome></DashboardHome></PrivateRouter>  
       },
       {
       path: "manage-applications",
-      element: <ManageApplications></ManageApplications>
+      element: <PrivateRouter> <ManageApplications></ManageApplications> </PrivateRouter>
       },
       {
       path: "manage-policies",
-      element: <ManagePolicies></ManagePolicies>
+      element: <PrivateRouter><ManagePolicies></ManagePolicies></PrivateRouter> 
       },
       {
       path: "manage-transactions",
-      element: <ManageTransactions></ManageTransactions>
+      element: <PrivateRouter><ManageTransactions></ManageTransactions></PrivateRouter> 
       },
       {
       path: "manage-users",
-      element: <ManageUsers></ManageUsers>
+      element:<PrivateRouter><ManageUsers></ManageUsers></PrivateRouter>
+       
       },
       {
       path: "assigned-customers",
-      element: <AssignedCustomers></AssignedCustomers>
+      element: <PrivateRouter><AssignedCustomers></AssignedCustomers></PrivateRouter> 
       },
       {
       path: "manage-blogs",
-      element: <ManageBlogs></ManageBlogs>
+      element: <PrivateRouter><ManageBlogs></ManageBlogs></PrivateRouter> 
       },
       {
       path: "policies-clearance",
-      element: <PolicyClearance></PolicyClearance>
+      element: <PrivateRouter><PolicyClearance></PolicyClearance></PrivateRouter> 
       },
       {
       path: "claim-request/:email",
-      element: <ClaimRequestPage></ClaimRequestPage>
+      element: <PrivateRouter><ClaimRequestPage></ClaimRequestPage></PrivateRouter> 
       },
       {
       path: "my-policies/:email",
-      element: <MyPolicies></MyPolicies>
+      element: <PrivateRouter><MyPolicies></MyPolicies></PrivateRouter> 
       },
       {
       path: "payment/:email",
-      element: <PaymentStatus></PaymentStatus>
+      element: <PrivateRouter><PaymentStatus></PaymentStatus></PrivateRouter> 
       },
       {
         path:"pay/:id",
-        element:<PayPolicy></PayPolicy>
+        element: <PrivateRouter><PayPolicy></PayPolicy></PrivateRouter> 
       }
 
     ]

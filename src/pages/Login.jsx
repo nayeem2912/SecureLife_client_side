@@ -1,16 +1,20 @@
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import Logo from "../components/Logo";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 import axios from "axios";
+import { useRef } from "react";
 
 
 const Login = () => {
-    const {signIn} = useAuth();
+    const {signIn, googleSignIn, forgetPass} = useAuth();
+    const location = useLocation()
+    const navigate = useNavigate()
+    const emailRef = useRef()
   const {
     register,
     handleSubmit,
@@ -24,6 +28,7 @@ const Login = () => {
           await axios.patch(`http://localhost:5000/users/${user.email}`,{
             last_log_in: new Date().toISOString()
           })
+          navigate(`${location.state? location.state : "/"}`)
           if(user){
             Swal.fire({
   title: "Login successful!",
@@ -40,13 +45,45 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    console.log("Google login clicked");
-    // Google Login with Firebase/Auth here
+    googleSignIn()
+      .then( async (result) => {
+        const user = result.user;
+        await axios.patch(`http://localhost:5000/users/${user.email}`,{
+            last_log_in: new Date().toISOString()
+          })
+          navigate(`${location.state? location.state : "/"}`)
+         if(user){
+            Swal.fire({
+  title: "Login successful!",
+  icon: "success",
+  draggable: true
+});
+          }
+           
+      })
+       
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        toast.error(errorCode ,errorMessage)
+      })
   };
 
   const handleForgetPassword = () => {
-    // Redirect to forgot password page or open a modal
-    console.log("Redirect to forgot password");
+    const email = emailRef.current.value;
+      forgetPass(email)
+      .then(() => {
+        Swal.fire({
+  title: "A password reset email is sent. Please check your email.",
+  icon: "success",
+  draggable: true
+});
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        toast(errorCode, errorMessage)
+      });
   };
 
   return (
@@ -91,6 +128,7 @@ const Login = () => {
             <input
               type="email"
               id="email"
+              ref={emailRef}
               placeholder="you@example.com"
               {...register("email", { required: "Email is required" })}
               className="w-full border text-gray-500 border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
