@@ -73,7 +73,8 @@ const PolicyClearance = () => {
               </td>
               <td>
                 <button
-                  className="btn btn-sm btn-info"
+                  className="btn btn-sm bg-gradient-to-b from-sky-400 to-blue-600
+ text-white btn-info"
                   onClick={() => handleViewDetails(claim)}
                 >
                   View Details
@@ -98,7 +99,8 @@ const PolicyClearance = () => {
               <form method="dialog" className="flex gap-2">
                 <button className="btn" onClick={() => setShowModal(false)}>Close</button>
                 {selectedClaim.status === "Pending" && (
-                  <button className="btn bg-green-600 text-white" onClick={handleApprove}>
+                  <button className="btn bg-gradient-to-b from-sky-400 to-blue-600
+ text-white " onClick={handleApprove}>
                     Approve Claim
                   </button>
                 )}

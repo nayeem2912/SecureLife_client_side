@@ -9,6 +9,7 @@ const ClaimRequestPage = () => {
   const { user } = useAuth();
   const [selectedPolicy, setSelectedPolicy] = useState(null);
   const [showClaimModal, setShowClaimModal] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -16,15 +17,29 @@ const ClaimRequestPage = () => {
     formState: { errors },
   } = useForm();
 
+  // Approved Applications
   const {
     data: approvedPolicies = [],
     isLoading,
-    refetch
+    refetch: refetchApplications
   } = useQuery({
     queryKey: ["approvedApplications", user?.email],
     queryFn: async () => {
       const res = await axios.get(`http://localhost:5000/applications/user/${user.email}`);
       return res.data.filter((app) => app.status === "Approved");
+    },
+    enabled: !!user?.email
+  });
+
+  // Claimed policies
+  const {
+    data: claims = [],
+    refetch: refetchClaims
+  } = useQuery({
+    queryKey: ["claims", user?.email],
+    queryFn: async () => {
+      const res = await axios.get(`http://localhost:5000/claims/user/${user.email}`);
+      return res.data;
     },
     enabled: !!user?.email
   });
@@ -57,7 +72,8 @@ const ClaimRequestPage = () => {
       Swal.fire("Success", "Claim submitted successfully", "success");
       reset();
       setShowClaimModal(false);
-      refetch();
+      refetchClaims(); 
+      refetchApplications();
     } catch (err) {
       Swal.fire("Error", "Failed to submit claim", "error");
       console.error(err);
@@ -65,7 +81,7 @@ const ClaimRequestPage = () => {
   };
 
   if (isLoading) return <p className="text-center">Loading...</p>;
-
+ 
   return (
     <div className="p-4 max-w-4xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">Claim Request Page</h2>
@@ -81,27 +97,49 @@ const ClaimRequestPage = () => {
           </tr>
         </thead>
         <tbody>
-          {approvedPolicies.map((app) => (
-            <tr key={app._id}>
-              <td>{app.policyName}</td>
-              <td>{app.coverage}</td>
-              <td>{app.duration}</td>
-              <td>{app.premium} BDT</td>
-              <td>
-                {app.status === "Approved" && <span className="badge badge-success">Approved</span>}
-                {app.status === "Pending" && <span className="badge badge-warning">Pending</span>}
-                {!app.status && <span className="badge badge-neutral">Not Claimed</span>}
-              </td>
-              <td>
-                {!app.status && (
-                  <button className="btn btn-sm bg-gradient-to-b from-sky-400 to-blue-600
- text-white" onClick={() => openClaimModal(app)}>
-                    Claim
-                  </button>
-                )}
-              </td>
-            </tr>
-          ))}
+          {approvedPolicies.map((app) => {
+            const hasClaimed = claims?.some(claim => claim.policyId === app._id);
+            const existingClaim = claims?.find(claim => claim.policyId === app._id);
+
+            return (
+              <tr key={app._id}>
+                <td>{app.policyName}</td>
+                <td>{app.coverage}</td>
+                <td>{app.duration}</td>
+                <td>{app.premium} BDT</td>
+                 <td>
+                 
+  {existingClaim ? (
+    <>
+     
+      {existingClaim.status === "Pending" && (
+        <span className="badge badge-warning">Pending</span>
+      )}
+      {existingClaim.status === "Approved" && (
+        <span className="badge badge-success">Approved</span>
+      )}
+      {existingClaim.status === "Rejected" && (
+        <span className="badge badge-error">Rejected</span>
+      )}
+    </>
+  ) : (
+    <span className="badge badge-neutral">Not Claimed</span>
+  )}
+</td>
+              
+                <td>
+                  {!hasClaimed && (
+                    <button
+                      className="btn btn-sm bg-gradient-to-b from-sky-400 to-blue-600 text-white"
+                      onClick={() => openClaimModal(app)}
+                    >
+                      Claim
+                    </button>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 
@@ -141,7 +179,7 @@ const ClaimRequestPage = () => {
                 {errors.document && <p className="text-red-500 text-sm">{errors.document.message}</p>}
               </div>
               <div className="modal-action">
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn bg-gradient-to-b from-sky-400 to-blue-600 text-white">Submit</button>
                 <button className="btn" type="button" onClick={() => setShowClaimModal(false)}>Cancel</button>
               </div>
             </form>

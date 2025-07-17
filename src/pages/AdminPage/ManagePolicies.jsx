@@ -52,8 +52,8 @@ const ManagePolicies = () => {
         image: imageUrl,
         minAge: parseInt(data.minAge),
         maxAge: parseInt(data.maxAge),
-        coverageRange: data.coverageRange,
-        durationOptions: data.durationOptions,
+        coverage: data.coverage,
+        termLength: data.termLength,
         basePremium: parseFloat(data.basePremium),
       };
 
@@ -79,11 +79,11 @@ const ManagePolicies = () => {
     setShowModal(true);
     setValue("title", policy.title);
     setValue("category", policy.category);
-    setValue("description", policy.description);
+    setValue("shortDescription", policy.shortDescription);
     setValue("minAge", policy.minAge);
     setValue("maxAge", policy.maxAge);
-    setValue("coverageRange", policy.coverageRange);
-    setValue("durationOptions", policy.durationOptions);
+    setValue("coverage", policy.coverage);
+    setValue("termLength", policy.termLength);
     setValue("basePremium", policy.basePremium);
   };
 
@@ -132,13 +132,13 @@ const ManagePolicies = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <input {...register("title", { required: true })} className="input input-bordered w-full" placeholder="Policy Title" />
               <input {...register("category", { required: true })} className="input input-bordered w-full" placeholder="Category" />
-              <textarea {...register("description", { required: true })} className="textarea textarea-bordered w-full" placeholder="Description"></textarea>
+              <textarea {...register("shortDescription", { required: true })} className="textarea textarea-bordered w-full" placeholder="Description"></textarea>
               <div className="grid grid-cols-2 gap-2">
                 <input type="number" {...register("minAge", { required: true })} className="input input-bordered w-full" placeholder="Minimum Age" />
                 <input type="number" {...register("maxAge", { required: true })} className="input input-bordered w-full" placeholder="Maximum Age" />
               </div>
-              <input {...register("coverageRange", { required: true })} className="input input-bordered w-full" placeholder="Coverage Range (e.g. 500000 - 2000000)" />
-              <input {...register("durationOptions", { required: true })} className="input input-bordered w-full" placeholder="Duration Options (e.g. 5,10,15 years)" />
+              <input {...register("coverage", { required: true })} className="input input-bordered w-full" placeholder="Coverage Range (e.g. 500000 - 2000000)" />
+              <input {...register("termLength", { required: true })} className="input input-bordered w-full" placeholder="Duration Options (e.g. 5,10,15 years)" />
               <input type="number" step="0.01" {...register("basePremium", { required: true })} className="input input-bordered w-full" placeholder="Base Premium Rate" />
               <input type="file" {...register("image", { required: !editingPolicy })} className="file-input file-input-bordered w-full" />
               <div className="modal-action">

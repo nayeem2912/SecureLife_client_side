@@ -56,7 +56,6 @@ const PolicyDetails = () => {
           <p className="text-gray-700">Term Length: {policy.termLength}</p>
           <p className="text-gray-700">Age: {policy.minAge} - {policy.maxAge}</p>
           <p className="text-gray-700">Coverage: {policy.coverage}</p>
-          <p className="text-gray-700">Duration: {policy.duration}</p>
           <p className="text-gray-700">Base Premium: {policy.basePremium} BDT</p>
         </div>
 
