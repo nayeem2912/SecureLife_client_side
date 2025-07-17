@@ -17,7 +17,7 @@ const CustomerReviews = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-6 text-center">Customer Reviews</h2>
+      <h2 className="text-3xl bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent font-bold mb-6 text-center">Customer Reviews</h2>
       <Carousel
         showArrows
         infiniteLoop
@@ -36,7 +36,7 @@ const CustomerReviews = () => {
               alt={review.name}
               className="w-50 h-60 mx-auto rounded-full mb-3"
             />
-            <h3 className="text-lg font-semibold mb-1">{review.name}</h3>
+            <h3 className="text-lg text-gray-700 font-semibold mb-1">{review.name}</h3>
             <div className="flex justify-center mb-2">
               {[...Array(5)].map((_, i) => (
                 <svg

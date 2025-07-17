@@ -7,7 +7,7 @@ const useRole = () => {
 
   const { data: role, isLoading, isError } = useQuery({
     queryKey: ["userRole", user?.email],
-    enabled: !!user?.email, // ensures query only runs when user is available
+    enabled: !!user?.email, 
     queryFn: async () => {
       const res = await fetch(`http://localhost:5000/users/role/${user.email}`);
       const data = await res.json();

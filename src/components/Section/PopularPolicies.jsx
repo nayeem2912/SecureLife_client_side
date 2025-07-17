@@ -15,23 +15,23 @@ const PopularPolicies = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
-      <h2 className="text-3xl font-bold mb-8 text-center">Popular Policies</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent">Popular Policies</h2>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {policies.map((policy) => (
           <div
             key={policy._id}
-            className="border rounded-lg p-4 shadow hover:shadow-md transition duration-300"
+            className="border bg-white rounded-lg p-4 shadow hover:shadow-md transition duration-300"
           >
             <img
               src={policy.image || "/default-policy.jpg"}
               alt={policy.title}
               className="w-full h-40 object-cover mb-4 rounded"
             />
-            <h3 className="text-xl font-semibold mb-2">{policy.title}</h3>
-            <p>
+            <h3 className="text-xl text-gray-700 font-semibold mb-2">{policy.title}</h3>
+            <p className="text-gray-700">
               <strong>Coverage:</strong> {policy.coverage}
             </p>
-            <p>
+            <p className="text-gray-700">
               <strong>Duration:</strong> {policy.duration}
             </p>
             <p className="text-sm text-gray-600 mb-3">
@@ -39,7 +39,7 @@ const PopularPolicies = () => {
             </p>
             <Link
               to={`/details/${policy._id}`}
-              className="inline-block text-blue-600 hover:underline text-sm font-medium"
+              className="inline-block bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent hover:underline text-sm font-medium"
             >
               View Details
             </Link>

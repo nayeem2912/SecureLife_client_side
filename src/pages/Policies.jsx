@@ -90,7 +90,7 @@ const Policies = () => {
                 : policy.shortDescription}
             </p>
             <Link to={`/details/${policy._id}`}>
-              <button className="mt-3 text-blue-600 underline">View Details</button>
+              <button className="mt-3 bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent underline">View Details</button>
             </Link>
           </div>
         ))}

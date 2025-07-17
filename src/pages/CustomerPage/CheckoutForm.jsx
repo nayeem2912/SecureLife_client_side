@@ -48,7 +48,8 @@ const CheckoutForm = ({ application, navigate }) => {
       <button
         type="submit"
         disabled={!stripe || processing}
-        className="btn btn-primary w-full"
+        className="btn bg-gradient-to-b from-sky-400 to-blue-600
+ text-white w-full"
       >
         {processing ? "Processing..." : `Pay ${application.premium} BDT`}
       </button>

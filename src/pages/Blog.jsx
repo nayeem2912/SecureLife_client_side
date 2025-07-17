@@ -45,7 +45,7 @@ const Blog = () => {
           <div key={blog._id} className="bg-white shadow-md rounded-xl overflow-hidden">
             <img src={blog.image} alt={blog.title} className="w-full h-52 object-cover" />
             <div className="p-4">
-              <h3 className="text-xl font-semibold">{blog.title}</h3>
+              <h3 className="text-xl bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent font-semibold">{blog.title}</h3>
               <p className="text-gray-600 mt-2">
                 {blog.content.split(" ").slice(0, 25).join(" ")}...
               </p>
@@ -57,10 +57,10 @@ const Blog = () => {
                 <span className="ml-auto">{dayjs(blog.publishDate).format("MMM D, YYYY")}</span>
               </div>
               <div className="flex justify-between items-center mt-3">
-                <span className="text-sm text-gray-400">Visits: {blog.visits || 0}</span>
+                <span className="text-sm  bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent">Visits: {blog.visits || 0}</span>
                 <button
                   onClick={() => handleReadMore(blog)}
-                  className="text-blue-600 underline text-sm"
+                  className="bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent underline text-sm"
                 >
                   Read more
                 </button>

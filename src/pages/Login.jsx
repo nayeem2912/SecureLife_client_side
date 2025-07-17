@@ -6,6 +6,7 @@ import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
+import axios from "axios";
 
 
 const Login = () => {
@@ -18,8 +19,11 @@ const Login = () => {
 
   const onSubmit = (data) => {
     signIn(data.email, data.password)
-    .then(result => {
+    .then( async (result) => {
           const user = result.user;
+          await axios.patch(`http://localhost:5000/users/${user.email}`,{
+            last_log_in: new Date().toISOString()
+          })
           if(user){
             Swal.fire({
   title: "Login successful!",
@@ -133,7 +137,7 @@ const Login = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full text-white py-2 rounded-md bg-gradient-to-b from-sky-400 to-blue-600
+            className="w-full  py-2 rounded-md bg-gradient-to-b from-sky-400 to-blue-600 text-white
  transition duration-200"
           >
             Login

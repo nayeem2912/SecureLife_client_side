@@ -29,6 +29,7 @@ import ManageApplications from "../pages/AdminPage/ManageApplications";
 import PayPolicy from "../pages/CustomerPage/PayPolicy";
 import ClaimRequestPage from "../pages/CustomerPage/ClaimRequestPage";
 import UserProfile from "../pages/UserProfile";
+import DashboardHome from "../components/DashboardHome";
 
 
 export const router = createBrowserRouter([
@@ -88,6 +89,10 @@ export const router = createBrowserRouter([
     element:<Dashboard></Dashboard>,
     errorElement:<ErrorPage></ErrorPage>,
     children:[
+      {
+       index:true,
+       element:<DashboardHome></DashboardHome>
+      },
       {
       path: "manage-applications",
       element: <ManageApplications></ManageApplications>

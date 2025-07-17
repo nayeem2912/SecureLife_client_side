@@ -94,7 +94,8 @@ const ClaimRequestPage = () => {
               </td>
               <td>
                 {!app.status && (
-                  <button className="btn btn-sm btn-primary" onClick={() => openClaimModal(app)}>
+                  <button className="btn btn-sm bg-gradient-to-b from-sky-400 to-blue-600
+ text-white" onClick={() => openClaimModal(app)}>
                     Claim
                   </button>
                 )}

@@ -6,7 +6,9 @@ const ManageTransactions = () => {
     queryKey: ["transactions"],
     queryFn: async () => {
       const res = await axios.get("http://localhost:5000/transactions");
+      
       return res.data;
+      
     },
   });
 
@@ -26,7 +28,7 @@ const ManageTransactions = () => {
 
       {/* Total Income Card */}
       <div className="mb-6">
-        <div className="bg-green-100 text-green-700 p-4 rounded shadow-md w-64">
+        <div className=" bg-gradient-to-b from-sky-400 to-blue-600 text-white p-4 rounded shadow-md w-64">
           <h3 className="text-lg font-semibold">💰 Total Income</h3>
           <p className="text-2xl font-bold">{income.totalIncome || 0} BDT</p>
         </div>

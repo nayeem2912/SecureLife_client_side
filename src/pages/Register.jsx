@@ -78,8 +78,7 @@ const Register = () => {
   };
 
   const handleGoogleSignup = () => {
-    console.log("Google signup clicked");
-    // Google Auth logic
+    
   };
 
   const handlePhotoChange = async(e) => {
