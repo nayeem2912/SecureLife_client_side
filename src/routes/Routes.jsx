@@ -31,6 +31,9 @@ import ClaimRequestPage from "../pages/CustomerPage/ClaimRequestPage";
 import UserProfile from "../pages/UserProfile";
 import DashboardHome from "../components/DashboardHome";
 import PrivateRouter from "../contexts/PrivateRouter";
+import AboutUs from "../pages/AboutUs";
+import TermsOfUse from "../pages/TermsOfUse";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
 
 
 export const router = createBrowserRouter([
@@ -62,6 +65,18 @@ export const router = createBrowserRouter([
       {
         path:'register',
         Component:Register,
+      },
+      {
+        path:'about',
+        Component: AboutUs,
+      },
+      {
+        path:'term',
+        Component: TermsOfUse,
+      },
+      {
+        path:'privacy',
+        Component: PrivacyPolicy,
       },
       {
         path:'profile',

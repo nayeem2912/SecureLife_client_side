@@ -2,9 +2,11 @@ import React from 'react';
 import { Outlet } from 'react-router';
 
 import Sidebar from '../pages/Sidebar';
+import useDynamicTitle from '../hooks/useDynamicTitle';
 
 
 const Dashboard = () => {
+  useDynamicTitle()
     return (
           <div className='relative min-h-screen md:flex '>
       {/* Left Side: Sidebar Component */}
