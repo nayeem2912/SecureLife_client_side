@@ -17,7 +17,7 @@ const ClaimRequestPage = () => {
     formState: { errors },
   } = useForm();
 
-  // Approved Applications
+  // Fetch approved applications
   const {
     data: approvedPolicies = [],
     isLoading,
@@ -31,7 +31,7 @@ const ClaimRequestPage = () => {
     enabled: !!user?.email
   });
 
-  // Claimed policies
+  // Fetch claims
   const {
     data: claims = [],
     refetch: refetchClaims
@@ -55,7 +55,10 @@ const ClaimRequestPage = () => {
     formData.append("image", file);
 
     try {
-      const imgRes = await axios.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_key}`, formData);
+      const imgRes = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_key}`,
+        formData
+      );
       const documentUrl = imgRes.data.data.url;
 
       const claimData = {
@@ -72,7 +75,7 @@ const ClaimRequestPage = () => {
       Swal.fire("Success", "Claim submitted successfully", "success");
       reset();
       setShowClaimModal(false);
-      refetchClaims(); 
+      refetchClaims();
       refetchApplications();
     } catch (err) {
       Swal.fire("Error", "Failed to submit claim", "error");
@@ -81,7 +84,7 @@ const ClaimRequestPage = () => {
   };
 
   if (isLoading) return <p className="text-center">Loading...</p>;
- 
+
   return (
     <div className="p-4 max-w-4xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">Claim Request Page</h2>
@@ -98,8 +101,9 @@ const ClaimRequestPage = () => {
         </thead>
         <tbody>
           {approvedPolicies.map((app) => {
-            const hasClaimed = claims?.some(claim => claim.policyId === app._id);
-            const existingClaim = claims?.find(claim => claim.policyId === app._id);
+            const existingClaim = claims?.find(
+              (claim) => claim.policyId?.toString() === app._id?.toString()
+            );
 
             return (
               <tr key={app._id}>
@@ -107,28 +111,25 @@ const ClaimRequestPage = () => {
                 <td>{app.coverage}</td>
                 <td>{app.duration}</td>
                 <td>{app.premium} BDT</td>
-                 <td>
-                 
-  {existingClaim ? (
-    <>
-     
-      {existingClaim.status === "Pending" && (
-        <span className="badge badge-warning">Pending</span>
-      )}
-      {existingClaim.status === "Approved" && (
-        <span className="badge badge-success">Approved</span>
-      )}
-      {existingClaim.status === "Rejected" && (
-        <span className="badge badge-error">Rejected</span>
-      )}
-    </>
-  ) : (
-    <span className="badge badge-neutral">Not Claimed</span>
-  )}
-</td>
-              
                 <td>
-                  {!hasClaimed && (
+                  {existingClaim ? (
+                    <>
+                      {existingClaim.status === "Pending" && (
+                        <span className="badge badge-warning">Pending</span>
+                      )}
+                      {existingClaim.status === "Approved" && (
+                        <span className="badge badge-success">Approved</span>
+                      )}
+                      {existingClaim.status === "Rejected" && (
+                        <span className="badge badge-error">Rejected</span>
+                      )}
+                    </>
+                  ) : (
+                    <span className="badge badge-neutral">Not Claimed</span>
+                  )}
+                </td>
+                <td>
+                  {!existingClaim && (
                     <button
                       className="btn btn-sm bg-gradient-to-b from-sky-400 to-blue-600 text-white"
                       onClick={() => openClaimModal(app)}
@@ -166,7 +167,9 @@ const ClaimRequestPage = () => {
                   rows="3"
                   placeholder="Enter reason for claim"
                 ></textarea>
-                {errors.reason && <p className="text-red-500 text-sm">{errors.reason.message}</p>}
+                {errors.reason && (
+                  <p className="text-red-500 text-sm">{errors.reason.message}</p>
+                )}
               </div>
               <div>
                 <label className="label font-medium">Upload Document (PDF/Image)</label>
@@ -176,11 +179,24 @@ const ClaimRequestPage = () => {
                   {...register("document", { required: "Document is required" })}
                   className="file-input file-input-bordered w-full"
                 />
-                {errors.document && <p className="text-red-500 text-sm">{errors.document.message}</p>}
+                {errors.document && (
+                  <p className="text-red-500 text-sm">{errors.document.message}</p>
+                )}
               </div>
               <div className="modal-action">
-                <button type="submit" className="btn bg-gradient-to-b from-sky-400 to-blue-600 text-white">Submit</button>
-                <button className="btn" type="button" onClick={() => setShowClaimModal(false)}>Cancel</button>
+                <button
+                  type="submit"
+                  className="btn bg-gradient-to-b from-sky-400 to-blue-600 text-white"
+                >
+                  Submit
+                </button>
+                <button
+                  className="btn"
+                  type="button"
+                  onClick={() => setShowClaimModal(false)}
+                >
+                  Cancel
+                </button>
               </div>
             </form>
           </div>
