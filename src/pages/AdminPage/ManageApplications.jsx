@@ -37,7 +37,7 @@ const ManageApplications = () => {
   const handleAssignAgent = async (appId) => {
     const selectedEmail = selectedAgents[appId];
     if (!selectedEmail) {
-      return Swal.fire("Error", "Please select an agent", "error");
+      return Swal.fire("Please select an agent");
     }
 
     try {
@@ -53,7 +53,7 @@ const ManageApplications = () => {
 
   const handleReject = async () => {
     if (!rejectReason) {
-      return Swal.fire("Error", "Please provide rejection reason", "error");
+      return Swal.fire("Please provide rejection reason");
     }
 
     try {
@@ -63,12 +63,12 @@ const ManageApplications = () => {
           reason: rejectReason,
         }
       );
-      Swal.fire("Rejected", "Application rejected", "success");
+      Swal.fire( "Application rejected");
       setShowRejectModal(false);
       setRejectReason("");
       refetchApplications();
     } catch (err) {
-      Swal.fire("Error", "Failed to reject", err.message || err);
+      Swal.fire("Failed to reject", err.message || err);
     }
   };
 

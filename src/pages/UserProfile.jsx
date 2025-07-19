@@ -16,11 +16,11 @@ const UserProfileCard = ({ users }) => {
       });
     },
     onSuccess: () => {
-      Swal.fire("Success", "Profile updated", "success");
+      Swal.fire("Profile updated");
       setEditing(false);
     },
     onError: () => {
-      Swal.fire("Error", "Update failed", "error");
+      Swal.fire("Update failed");
     },
   });
 

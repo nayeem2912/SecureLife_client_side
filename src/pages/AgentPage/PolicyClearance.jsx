@@ -36,11 +36,11 @@ const PolicyClearance = () => {
   const handleApprove = async () => {
     try {
       await axios.patch(`https://life-insurance-management-server.vercel.app/claims/${selectedClaim._id}/approve`);
-      Swal.fire("Success", "Claim Approved", "success");
+      Swal.fire("Claim Approved");
       setShowModal(false);
       refetch();
     } catch (err) {
-      Swal.fire("Error", "Failed to approve claim", "error", err);
+      Swal.fire("Failed to approve claim", err);
     }
   };
 

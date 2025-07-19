@@ -67,7 +67,7 @@ const ManageBlog = () => {
     try {
       if (editBlog) {
         await axios.patch(`https://life-insurance-management-server.vercel.app/blogs/${editBlog._id}`, blogData);
-        Swal.fire("Updated", "Blog updated successfully", "success");
+        Swal.fire("Blog updated successfully");
       } else {
         await axios.post("https://life-insurance-management-server.vercel.app/blogs", blogData);
         Swal.fire("Blog post created");

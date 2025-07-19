@@ -73,13 +73,13 @@ const ClaimRequestPage = () => {
       };
 
       await axios.post("https://life-insurance-management-server.vercel.app/claims", claimData);
-      Swal.fire("Success", "Claim submitted successfully", "success");
+      Swal.fire("Claim submitted successfully");
       reset();
       setShowClaimModal(false);
       refetchClaims();
       refetchApplications();
     } catch (err) {
-      Swal.fire("Error", "Failed to submit claim", "error");
+      Swal.fire("Failed to submit claim");
       toast(err);
     }
   };

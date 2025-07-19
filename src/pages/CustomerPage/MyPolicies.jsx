@@ -59,7 +59,7 @@ const MyPolicies = () => {
 
   const handleReviewSubmit = async () => {
     if (!rating || !feedback) {
-      return Swal.fire("Error", "Please provide rating and feedback", "error");
+      return Swal.fire("Please provide rating and feedback");
     }
 
     const reviewData = {
