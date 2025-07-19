@@ -10,14 +10,14 @@ const ManageUsers = () => {
   const { data: users = [], refetch, isLoading } = useQuery({
     queryKey: ["allUsers", filter],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/users");
+      const res = await axios.get("https://life-insurance-management-server.vercel.app/users");
       return filter ? res.data.filter(user => user.role === filter) : res.data;
     },
   });
 
   const handlePromote = async (id) => {
     try {
-      const res = await axios.patch(`http://localhost:5000/users/promote/${id}`);
+      const res = await axios.patch(`https://life-insurance-management-server.vercel.app/users/promote/${id}`);
       if (res.data.modifiedCount > 0) {
         Swal.fire("Promoted!");
         refetch();
@@ -29,7 +29,7 @@ const ManageUsers = () => {
 
   const handleDemote = async (id) => {
     try {
-      const res = await axios.patch(`http://localhost:5000/users/demote/${id}`);
+      const res = await axios.patch(`https://life-insurance-management-server.vercel.app/users/demote/${id}`);
       if (res.data.modifiedCount > 0) {
         Swal.fire("Demoted!");
         refetch();

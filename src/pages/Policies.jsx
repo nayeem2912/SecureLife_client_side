@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const fetchPolicies = async ({ queryKey }) => {
   const [_key, { category, page, search }] = queryKey;
-  const res = await axios.get(`http://localhost:5000/policies`, {
+  const res = await axios.get(`https://life-insurance-management-server.vercel.app/policies`, {
     params: { category, page, limit: 9, search },
   });
   return res.data;

@@ -26,7 +26,7 @@ const ClaimRequestPage = () => {
   } = useQuery({
     queryKey: ["approvedApplications", user?.email],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/applications/user/${user.email}`);
+      const res = await axios.get(`https://life-insurance-management-server.vercel.app/applications/user/${user.email}`);
       return res.data.filter((app) => app.status === "Approved");
     },
     enabled: !!user?.email
@@ -39,7 +39,7 @@ const ClaimRequestPage = () => {
   } = useQuery({
     queryKey: ["claims", user?.email],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/claims/user/${user.email}`);
+      const res = await axios.get(`https://life-insurance-management-server.vercel.app/claims/user/${user.email}`);
       return res.data;
     },
     enabled: !!user?.email
@@ -72,7 +72,7 @@ const ClaimRequestPage = () => {
         claimedAt: new Date()
       };
 
-      await axios.post("http://localhost:5000/claims", claimData);
+      await axios.post("https://life-insurance-management-server.vercel.app/claims", claimData);
       Swal.fire("Success", "Claim submitted successfully", "success");
       reset();
       setShowClaimModal(false);

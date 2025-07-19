@@ -11,7 +11,7 @@ const PaymentStatus = () => {
   const { data: policies = [], isLoading } = useQuery({
     queryKey: ["paymentStatus", user?.email],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/applications/user/${user.email}`);
+      const res = await axios.get(`https://life-insurance-management-server.vercel.app/applications/user/${user.email}`);
       return res.data;
     },
     enabled: !!user?.email,

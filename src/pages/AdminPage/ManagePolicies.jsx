@@ -13,7 +13,7 @@ const ManagePolicies = () => {
   const { data: policies = [], refetch, isLoading } = useQuery({
     queryKey: ["allPolicies"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/policy");
+      const res = await axios.get("https://life-insurance-management-server.vercel.app/policy");
       return res.data;
     },
   });
@@ -28,7 +28,7 @@ const ManagePolicies = () => {
     });
 
     if (confirm.isConfirmed) {
-      await axios.delete(`http://localhost:5000/policies/${id}`);
+      await axios.delete(`https://life-insurance-management-server.vercel.app/policies/${id}`);
       refetch();
       Swal.fire( "Policy has been deleted.");
     }
@@ -60,10 +60,10 @@ const ManagePolicies = () => {
       };
 
       if (editingPolicy) {
-        await axios.patch(`http://localhost:5000/policies/${editingPolicy._id}`, policyData);
+        await axios.patch(`https://life-insurance-management-server.vercel.app/policies/${editingPolicy._id}`, policyData);
         Swal.fire("Policy updated successfully");
       } else {
-        await axios.post("http://localhost:5000/policies", policyData);
+        await axios.post("https://life-insurance-management-server.vercel.app/policies", policyData);
         Swal.fire("Policy added successfully");
       }
 

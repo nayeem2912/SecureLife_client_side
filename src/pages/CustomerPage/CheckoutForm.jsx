@@ -15,7 +15,7 @@ const CheckoutForm = ({ application, navigate }) => {
 
     setProcessing(true);
 
-    const res = await axios.post("http://localhost:5000/create-payment-intent", {
+    const res = await axios.post("https://life-insurance-management-server.vercel.app/create-payment-intent", {
       amount: parseInt(application.premium) * 100,
     });
 
@@ -34,7 +34,7 @@ const CheckoutForm = ({ application, navigate }) => {
       toast.error(error.message);
       setProcessing(false);
     } else if (paymentIntent.status === "succeeded") {
-      await axios.patch(`http://localhost:5000/applications/${application._id}/pay`, {
+      await axios.patch(`https://life-insurance-management-server.vercel.app/applications/${application._id}/pay`, {
         transactionId: paymentIntent.id,
       });
       toast.success("Payment successful!");

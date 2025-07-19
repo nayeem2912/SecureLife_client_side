@@ -8,7 +8,7 @@ const CustomerReviews = () => {
   const { data: reviews = [], isLoading } = useQuery({
     queryKey: ["customerReviews"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/reviews");
+      const res = await axios.get("https://life-insurance-management-server.vercel.app/reviews");
       return res.data;
     },
   });

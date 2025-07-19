@@ -25,7 +25,7 @@ const Login = () => {
     signIn(data.email, data.password)
     .then( async (result) => {
           const user = result.user;
-          await axios.patch(`http://localhost:5000/users/${user.email}`,{
+          await axios.patch(`https://life-insurance-management-server.vercel.app/users/${user.email}`,{
             last_log_in: new Date().toISOString()
           })
           navigate(`${location.state? location.state : "/"}`)
@@ -48,7 +48,7 @@ const Login = () => {
     googleSignIn()
       .then( async (result) => {
         const user = result.user;
-        await axios.patch(`http://localhost:5000/users/${user.email}`,{
+        await axios.patch(`https://life-insurance-management-server.vercel.app/users/${user.email}`,{
             last_log_in: new Date().toISOString()
           })
           navigate(`${location.state? location.state : "/"}`)

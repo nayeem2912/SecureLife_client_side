@@ -10,7 +10,7 @@ const UserProfileCard = ({ users }) => {
 
   const updateProfile = useMutation({
     mutationFn: async () => {
-      await axios.patch(`http://localhost:5000/users/${users.email}`, {
+      await axios.patch(`https://life-insurance-management-server.vercel.app/users/${users.email}`, {
         name,
         photoURL,
       });
@@ -82,7 +82,7 @@ const UserProfiles = () => {
   const { data: userdata = [], isLoading } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/users");
+      const res = await axios.get("https://life-insurance-management-server.vercel.app/users");
       return res.data;
     },
   });

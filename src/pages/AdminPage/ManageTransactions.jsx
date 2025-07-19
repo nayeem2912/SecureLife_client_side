@@ -5,7 +5,7 @@ const ManageTransactions = () => {
   const { data: transactions = [], isLoading } = useQuery({
     queryKey: ["transactions"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/transactions");
+      const res = await axios.get("https://life-insurance-management-server.vercel.app/transactions");
       
       return res.data;
       
@@ -15,7 +15,7 @@ const ManageTransactions = () => {
   const { data: income = {} } = useQuery({
     queryKey: ["totalIncome"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/transactions/total-income");
+      const res = await axios.get("https://life-insurance-management-server.vercel.app/transactions/total-income");
       return res.data;
     },
   });

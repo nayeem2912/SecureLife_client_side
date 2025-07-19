@@ -16,7 +16,7 @@ const PayPolicy = () => {
   const { data: application, isLoading } = useQuery({
     queryKey: ["singleApplication", id],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/applications/${id}`);
+      const res = await axios.get(`https://life-insurance-management-server.vercel.app/applications/${id}`);
       return res.data;
     },
     enabled: !!id,

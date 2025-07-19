@@ -26,7 +26,7 @@ const ApplicationForm = () => {
   } = useQuery({
     queryKey: ["quote", policyId, user?.email],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/quotes`, {
+      const res = await axios.get(`https://life-insurance-management-server.vercel.app/quotes`, {
         params: {
           policyId,
           email: user?.email,
@@ -52,7 +52,7 @@ const ApplicationForm = () => {
     };
 
     try {
-      const res = await axios.post("http://localhost:5000/applications", applicationData);
+      const res = await axios.post("https://life-insurance-management-server.vercel.app/applications", applicationData);
       if (res.data.insertedId) {
         Swal.fire({
           title: "Application submitted successfully!",

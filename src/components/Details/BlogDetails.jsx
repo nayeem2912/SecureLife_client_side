@@ -4,7 +4,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 
 const fetchBlogById = async (id) => {
-  const res = await axios.get(`http://localhost:5000/blogs/${id}`);
+  const res = await axios.get(`https://life-insurance-management-server.vercel.app/blogs/${id}`);
   return res.data;
 };
 

@@ -45,7 +45,7 @@ const Register = () => {
                     created_at: new Date().toISOString(),
                     last_log_in: new Date().toISOString()
                 }
-       const userRes = await axios.post('http://localhost:5000/users', userInfo);     
+       const userRes = await axios.post('https://life-insurance-management-server.vercel.app/users', userInfo);     
 
         const user = result.user;
         const profile= {
@@ -93,7 +93,7 @@ const Register = () => {
                     last_log_in: new Date().toISOString()
                 }
 
-                const userRes = await axios.post('http://localhost:5000/users', userInfo);
+                const userRes = await axios.post('https://life-insurance-management-server.vercel.app/users', userInfo);
                 
          if(user){
             Swal.fire({

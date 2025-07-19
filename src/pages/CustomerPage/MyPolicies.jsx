@@ -50,7 +50,7 @@ const MyPolicies = () => {
       queryKey: ["myApplications", user?.email],
       queryFn: async () => {
         const res = await axios.get(
-          `http://localhost:5000/applications/user/${user.email}`
+          `https://life-insurance-management-server.vercel.app/applications/user/${user.email}`
         );
         return res.data;
       },
@@ -73,7 +73,7 @@ const MyPolicies = () => {
     };
 
     try {
-      await axios.post("http://localhost:5000/reviews", reviewData);
+      await axios.post("https://life-insurance-management-server.vercel.app/reviews", reviewData);
       Swal.fire("Review submitted");
       setShowReviewModal(false);
       setFeedback("");
@@ -98,7 +98,7 @@ const MyPolicies = () => {
     setSelectedPolicy(app);
     try {
       const res = await axios.get(
-        `http://localhost:5000/applications/${app._id}`
+        `https://life-insurance-management-server.vercel.app/applications/${app._id}`
       );
       setAdminFeedback(res.data?.adminFeedback || "No feedback available");
       setShowFeedbackModal(true);

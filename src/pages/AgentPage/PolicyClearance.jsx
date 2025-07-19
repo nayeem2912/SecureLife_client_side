@@ -12,14 +12,14 @@ const PolicyClearance = () => {
   const { data: claims = [], isLoading, refetch } = useQuery({
     queryKey: ["claims"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/claims");
+      const res = await axios.get("https://life-insurance-management-server.vercel.app/claims");
       return res.data;
     },
   });
 
   const fetchPolicyDetails = async (policyId) => {
     try {
-      const res = await axios.get(`http://localhost:5000/applications/${policyId}`);
+      const res = await axios.get(`https://life-insurance-management-server.vercel.app/applications/${policyId}`);
       setPolicyDetails(res.data);
       toast(res.data)
     } catch (err) {
@@ -35,7 +35,7 @@ const PolicyClearance = () => {
 
   const handleApprove = async () => {
     try {
-      await axios.patch(`http://localhost:5000/claims/${selectedClaim._id}/approve`);
+      await axios.patch(`https://life-insurance-management-server.vercel.app/claims/${selectedClaim._id}/approve`);
       Swal.fire("Success", "Claim Approved", "success");
       setShowModal(false);
       refetch();

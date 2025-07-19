@@ -6,7 +6,7 @@ const PopularPolicies = () => {
   const { data: policies = [], isLoading } = useQuery({
     queryKey: ["popularPolicies"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/popular-policies");
+      const res = await axios.get("https://life-insurance-management-server.vercel.app/popular-policies");
       return res.data;
     },
   });

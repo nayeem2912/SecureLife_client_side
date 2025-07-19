@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchPolicyDetails = async (id) => {
-  const res = await axios.get(`http://localhost:5000/policies/${id}`);
+  const res = await axios.get(`https://life-insurance-management-server.vercel.app/policies/${id}`);
   return res.data;
 };
 

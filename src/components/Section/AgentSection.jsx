@@ -7,7 +7,7 @@ const AgentSection = () => {
   const { data: agents = [], isLoading } = useQuery({
     queryKey: ["featuredAgents"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/agents/featured");
+      const res = await axios.get("https://life-insurance-management-server.vercel.app/agents/featured");
       return res.data;
     },
   });

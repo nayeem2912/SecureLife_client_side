@@ -12,7 +12,7 @@ const NewsletterSubscription = () => {
 
    const onSubmit = async (data) => {
     try {
-      const res = await axios.post("http://localhost:5000/subscriptions", data);
+      const res = await axios.post("https://life-insurance-management-server.vercel.app/subscriptions", data);
       if (res.data.message) {
         toast.success(res.data.message);
         reset();

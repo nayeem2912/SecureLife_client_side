@@ -17,7 +17,7 @@ const ManageApplications = () => {
   } = useQuery({
     queryKey: ["applications"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/applications");
+      const res = await axios.get("https://life-insurance-management-server.vercel.app/applications");
       return res.data;
     },
   });
@@ -29,7 +29,7 @@ const ManageApplications = () => {
   } = useQuery({
     queryKey: ["agents"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/users/agents");
+      const res = await axios.get("https://life-insurance-management-server.vercel.app/users/agents");
       return res.data;
     },
   });
@@ -41,7 +41,7 @@ const ManageApplications = () => {
     }
 
     try {
-      await axios.patch(`http://localhost:5000/applications/${appId}/assign`, {
+      await axios.patch(`https://life-insurance-management-server.vercel.app/applications/${appId}/assign`, {
         agentEmail: selectedEmail,
       });
       Swal.fire( "Agent assigned successfully");
@@ -58,7 +58,7 @@ const ManageApplications = () => {
 
     try {
       await axios.patch(
-        `http://localhost:5000/applications/${rejectId}/reject`,
+        `https://life-insurance-management-server.vercel.app/applications/${rejectId}/reject`,
         {
           reason: rejectReason,
         }

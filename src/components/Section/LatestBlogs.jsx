@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 // TanStack fetch function
 const fetchLatestBlogs = async () => {
-  const res = await axios.get("http://localhost:5000/blog");
+  const res = await axios.get("https://life-insurance-management-server.vercel.app/blog");
   return res.data;
 };
 

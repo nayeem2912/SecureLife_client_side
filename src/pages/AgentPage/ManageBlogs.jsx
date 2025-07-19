@@ -19,14 +19,14 @@ const ManageBlogs = () => {
   const { data: blogs = [], isLoading } = useQuery({
     queryKey: ["agentBlogs", user?.email],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/blogs/agent/${user.email}`);
+      const res = await axios.get(`https://life-insurance-management-server.vercel.app/blogs/agent/${user.email}`);
       return res.data;
     }
   });
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/blogs/${id}`);
+      await axios.delete(`https://life-insurance-management-server.vercel.app/blogs/${id}`);
       Swal.fire( "Blog post deleted");
       queryClient.invalidateQueries(["agentBlogs", user.email]);
     } catch (err) {
@@ -66,10 +66,10 @@ const ManageBlogs = () => {
 
     try {
       if (editBlog) {
-        await axios.patch(`http://localhost:5000/blogs/${editBlog._id}`, blogData);
+        await axios.patch(`https://life-insurance-management-server.vercel.app/blogs/${editBlog._id}`, blogData);
         Swal.fire("Updated", "Blog updated successfully", "success");
       } else {
-        await axios.post("http://localhost:5000/blogs", blogData);
+        await axios.post("https://life-insurance-management-server.vercel.app/blogs", blogData);
         Swal.fire("Blog post created");
       }
       setTitle("");

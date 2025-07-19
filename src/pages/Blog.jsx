@@ -13,14 +13,14 @@ const Blog = () => {
   const { data: blogs = [], isLoading } = useQuery({
     queryKey: ["blogs"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/blogs");
+      const res = await axios.get("https://life-insurance-management-server.vercel.app/blogs");
       return res.data;
     },
   });
 
   const updateVisitMutation = useMutation({
     mutationFn: async (id) => {
-      return await axios.patch(`http://localhost:5000/blogs/${id}/visit`);
+      return await axios.patch(`https://life-insurance-management-server.vercel.app/blogs/${id}/visit`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["blogs"]);

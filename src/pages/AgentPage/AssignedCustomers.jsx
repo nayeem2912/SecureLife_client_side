@@ -12,14 +12,14 @@ const AssignedCustomers = () => {
   const { data: applications = [], refetch } = useQuery({
     queryKey: ["assignedCustomers", user?.email],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/applications/assigned/${user.agentEmail}`);
+      const res = await axios.get(`https://life-insurance-management-server.vercel.app/applications/assigned/${user.agentEmail}`);
       return res.data;
     },
   });
 
   const handleStatusChange = async (appId, newStatus) => {
     try {
-      await axios.patch(`http://localhost:5000/applications/${appId}/status`, {
+      await axios.patch(`https://life-insurance-management-server.vercel.app/applications/${appId}/status`, {
         status: newStatus,
       });
       Swal.fire( "Status changed successfully");

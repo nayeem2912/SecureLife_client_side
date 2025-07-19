@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 
 const fetchPolicyDetails = async (id) => {
-  const res = await axios.get(`http://localhost:5000/policies/${id}`);
+  const res = await axios.get(`https://life-insurance-management-server.vercel.app/policies/${id}`);
   return res.data;
 };
 
@@ -66,7 +66,7 @@ const QuotePage = () => {
     };
 
     try {
-      const res = await axios.post("http://localhost:5000/quotes", payload);
+      const res = await axios.post("https://life-insurance-management-server.vercel.app/quotes", payload);
       if (res.data.insertedId) {
         toast("Quote saved successfully!");
       }
