@@ -1,6 +1,6 @@
 # 🔐 Secure Life – Life Insurance Management Platform
 
-**Live Site:** [https://secure-life.vercel.app](https://secure-life.vercel.app)
+**Live Site:** [https://secure-life.vercel.app](https://secure-life-2912.netlify.app/)
 
 **Admin Credentials:**
 - Email: `fahim@gmail.com`
