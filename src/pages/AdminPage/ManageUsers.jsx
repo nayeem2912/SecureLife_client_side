@@ -57,8 +57,8 @@ const ManageUsers = () => {
           <option value="admin">Admin</option>
         </select>
       </div>
-
-      <table className="table w-full">
+        <div className="overflow-x-auto">
+      <table className="table table-zebra w-full">
         <thead>
           <tr>
             <th>Name</th>
@@ -78,7 +78,7 @@ const ManageUsers = () => {
               <td>
                 {u.role === "user" && (
                   <button
-                    className="btn btn-sm bg-gradient-to-b from-sky-400 to-blue-600
+                    className="btn text-xs btn-md bg-gradient-to-b from-sky-400 to-blue-600
  transition text-white"
                     onClick={() => handlePromote(u._id)}
                   >
@@ -87,7 +87,7 @@ const ManageUsers = () => {
                 )}
                 {u.role === "agent" && (
                   <button
-                    className="btn btn-sm bg-gradient-to-b from-sky-400 to-blue-600
+                    className="btn btn-md  bg-gradient-to-b from-sky-400 to-blue-600
  transition text-white"
                     onClick={() => handleDemote(u._id)}
                   >
@@ -100,6 +100,7 @@ const ManageUsers = () => {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 };

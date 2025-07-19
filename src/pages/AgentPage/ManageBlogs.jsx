@@ -96,7 +96,8 @@ const ManageBlogs = () => {
               <th>Title</th>
               <th>Author</th>
               <th>Published</th>
-              <th>Actions</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -115,6 +116,9 @@ publishDate).toLocaleDateString()}</td>
                     setImage(blog.image);
                     setShowModal(true);
                   }}>Edit</button>
+                  
+                </td>
+                <td>
                   <button className="btn btn-md bg-red-600 text-white" onClick={() => handleDelete(blog._id)}>Delete</button>
                 </td>
               </tr>

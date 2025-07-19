@@ -48,7 +48,8 @@ const PolicyClearance = () => {
   return (
     <div className="p-4 max-w-5xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">Policy Clearance Requests</h2>
-      <table className="table w-full">
+      <div className="overflow-x-auto">
+      <table className="table table-zebra w-full">
         <thead>
           <tr>
             <th>Policy Name</th>
@@ -73,7 +74,7 @@ const PolicyClearance = () => {
               </td>
               <td>
                 <button
-                  className="btn btn-sm bg-gradient-to-b from-sky-400 to-blue-600
+                  className="btn btn-md bg-gradient-to-b from-sky-400 to-blue-600
  text-white btn-info"
                   onClick={() => handleViewDetails(claim)}
                 >
@@ -84,7 +85,7 @@ const PolicyClearance = () => {
           ))}
         </tbody>
       </table>
-
+       </div>
       {/* Modal */}
       {showModal && policyDetails && (
         <dialog open className="modal">

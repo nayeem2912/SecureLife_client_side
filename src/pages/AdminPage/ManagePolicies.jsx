@@ -94,8 +94,8 @@ const ManagePolicies = () => {
       <h2 className="text-2xl font-bold mb-4">Manage Policies</h2>
       <button className="btn mb-4 bg-gradient-to-b from-sky-400 to-blue-600
  text-white" onClick={() => { setEditingPolicy(null); reset(); setShowModal(true); }}>Add New Policy</button>
-
-      <table className="table w-full">
+        <div className="overflow-x-auto">
+      <table className="table table-zebra w-full">
         <thead>
           <tr>
             <th>Title</th>
@@ -103,7 +103,8 @@ const ManagePolicies = () => {
             <th>Age Range</th>
             <th>Coverage</th>
             <th>Base Rate</th>
-            <th>Actions</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -117,13 +118,16 @@ const ManagePolicies = () => {
               <td>
                 <button className="btn btn-sm bg-gradient-to-b from-sky-400 to-blue-600
  text-white btn-outline" onClick={() => handleEdit(p)}>Edit</button>
+                
+              </td>
+              <td>
                 <button className="btn btn-sm bg-red-500 text-white ml-2" onClick={() => handleDelete(p._id)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
+        </div>
       {/* Modal */}
       {showModal && (
         <dialog open className="modal">

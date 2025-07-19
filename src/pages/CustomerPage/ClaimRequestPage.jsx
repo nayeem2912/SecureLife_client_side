@@ -88,7 +88,8 @@ const ClaimRequestPage = () => {
   return (
     <div className="p-4 max-w-4xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">Claim Request Page</h2>
-      <table className="table w-full">
+      <div className="overflow-x-auto">
+      <table className="table table-zebra w-full">
         <thead>
           <tr>
             <th>Policy</th>
@@ -125,7 +126,7 @@ const ClaimRequestPage = () => {
                       )}
                     </>
                   ) : (
-                    <span className="badge badge-neutral">Not Claimed</span>
+                    <span className="badge text-xs badge-neutral p-3">Not Claimed</span>
                   )}
                 </td>
                 <td>
@@ -143,7 +144,7 @@ const ClaimRequestPage = () => {
           })}
         </tbody>
       </table>
-
+         </div>
       {/* Claim Modal */}
       {showClaimModal && (
         <dialog id="claim-modal" open className="modal">

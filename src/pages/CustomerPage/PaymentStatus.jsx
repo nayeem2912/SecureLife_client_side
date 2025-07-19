@@ -22,7 +22,8 @@ const PaymentStatus = () => {
   return (
     <div className="p-4 max-w-4xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">Payment Status</h2>
-      <table className="table w-full">
+      <div className="overflow-x-auto">
+      <table className="table table-zebra w-full">
         <thead>
           <tr>
             <th>Policy Name</th>
@@ -49,7 +50,7 @@ const PaymentStatus = () => {
               <td>
                 {policy.paymentStatus === "unpaid" && (
                   <button
-                    className="btn btn-sm bg-gradient-to-b from-sky-400 to-blue-600
+                    className="btn btn-md bg-gradient-to-b from-sky-400 to-blue-600
  text-white"
                     onClick={() => navigate(`/dashboard/pay/${policy._id}`)}
                   >
@@ -61,6 +62,7 @@ const PaymentStatus = () => {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 };

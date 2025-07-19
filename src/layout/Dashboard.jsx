@@ -8,7 +8,7 @@ import useDynamicTitle from '../hooks/useDynamicTitle';
 const Dashboard = () => {
   useDynamicTitle()
     return (
-          <div className='relative min-h-screen md:flex '>
+          <div className='relative h-screen md:flex '>
       {/* Left Side: Sidebar Component */}
       <Sidebar />
       {/* Right Side: Dashboard Dynamic Content */}
