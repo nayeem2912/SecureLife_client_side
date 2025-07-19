@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const ClaimRequestPage = () => {
   const { user } = useAuth();
@@ -79,7 +80,7 @@ const ClaimRequestPage = () => {
       refetchApplications();
     } catch (err) {
       Swal.fire("Error", "Failed to submit claim", "error");
-      console.error(err);
+      toast(err);
     }
   };
 

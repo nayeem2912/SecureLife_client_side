@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const PolicyClearance = () => {
   const [selectedClaim, setSelectedClaim] = useState(null);
@@ -20,9 +21,9 @@ const PolicyClearance = () => {
     try {
       const res = await axios.get(`http://localhost:5000/applications/${policyId}`);
       setPolicyDetails(res.data);
-      console.log(res.data)
+      toast(res.data)
     } catch (err) {
-      console.error("Failed to fetch policy", err);
+      toast("Failed to fetch policy", err);
     }
   };
 

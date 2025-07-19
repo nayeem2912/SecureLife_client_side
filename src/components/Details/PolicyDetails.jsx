@@ -37,14 +37,6 @@ const PolicyDetails = () => {
           <p className="text-gray-700">{policy.eligibility}</p>
         </div>
 
-        <div className="mb-4">
-          <h2 className="font-semibold text-gray-700 text-lg mb-2">Benefits:</h2>
-          <ul className="list-disc list-inside text-gray-700">
-            {policy.benefits.map((benefit, i) => (
-              <li key={i}>{benefit}</li>
-            ))}
-          </ul>
-        </div>
 
         <div className="mb-4">
           <h2 className="font-semibold text-gray-700 text-lg mb-2">Premium Calculation:</h2>

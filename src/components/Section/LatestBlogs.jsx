@@ -1,54 +1,57 @@
-import { Link } from 'react-router';
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { Link } from "react-router";
 
-const blogData = [
-  {
-    id: 1,
-    title: "Why Life Insurance is Essential in 2025",
-    summary: "Discover the critical reasons why having a life insurance plan in 2025 is more important than ever before.",
-    slug: "/blogs/life-insurance-2025"
-  },
-  {
-    id: 2,
-    title: "How to Choose the Right Policy for Your Family",
-    summary: "Get expert insights on selecting the best insurance coverage tailored for your family's future needs.",
-    slug: "/blogs/choose-right-policy"
-  },
-  {
-    id: 3,
-    title: "Top 5 Benefits of Term Life Insurance",
-    summary: "Explore the most important benefits of choosing a term life policy and how it can save you money.",
-    slug: "/blogs/benefits-of-term-policy"
-  },
-  {
-    id: 4,
-    title: "SecureLife Dashboard Tour",
-    summary: "A walkthrough of how you can manage your policies, track claims, and more from our user dashboard.",
-    slug: "/blogs/dashboard-tour"
-  },
-];
+// TanStack fetch function
+const fetchLatestBlogs = async () => {
+  const res = await axios.get("http://localhost:5000/blog");
+  return res.data;
+};
 
 const LatestBlogs = () => {
+  const { data: blogs = [], isLoading } = useQuery({
+    queryKey: ["latestBlogs"],
+    queryFn: fetchLatestBlogs,
+  });
+
+  if (isLoading)
+    return <div className="text-center py-10">Loading blogs...</div>;
+
   return (
-    <section className="py-12 px-4 md:px-8 lg:px-16 ">
-      <h2 className="text-3xl font-bold text-center mb-10 bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent">
-        Latest Blogs & Articles
+    <div className="max-w-6xl mx-auto px-4 py-12">
+      <h2 className="text-4xl font-bold bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent text-center mb-10">
+        Latest Blog
       </h2>
 
-      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-        {blogData.map((blog) => (
-          <div key={blog.id} className="bg-gray-50 border border-blue-100 p-6 rounded-xl shadow hover:shadow-md transition-all">
-            <h3 className="text-xl font-semibold mb-2 text-gray-800">{blog.title}</h3>
-            <p className="text-gray-600 text-sm mb-4">{blog.summary}</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
+        {blogs.map((blog) => (
+          <div
+            key={blog._id}
+            className="bg-white rounded-lg shadow-md p-5 hover:shadow-lg transition-all duration-300 border"
+          >
+            <h3 className="text-xl text-gray-600 font-semibold mb-2">{blog.title}</h3>
+            <p className="text-gray-600 mb-4">
+              {blog.summary?.slice(0, 100)}...
+            </p>
             <Link
-              to={blog.slug}
-              className="text-sm font-medium text-blue-600 hover:underline"
+              to={`/blogs/${blog._id}`}
+              className=" bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent hover:underline font-medium"
             >
               Read more →
             </Link>
           </div>
         ))}
       </div>
-    </section>
+
+      <div className="text-center mt-10">
+        <Link
+          to="/blog"
+          className="inline-block px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+        >
+          All Blog 
+        </Link>
+      </div>
+    </div>
   );
 };
 

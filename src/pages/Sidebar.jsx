@@ -83,6 +83,11 @@ const Sidebar = () => {
                 <FaMoneyCheck className="inline text-black mr-2" /> Transactions
               </NavLink>
             </li>
+            <li>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to="/dashboard/manage-blog">
+                <FaBlog className="inline text-black mr-2" /> Manage Blogs
+              </NavLink>
+            </li>
             </ul>
           </>
         )}

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const ManageUsers = () => {
   const [filter, setFilter] = useState("");
@@ -22,7 +23,7 @@ const ManageUsers = () => {
         refetch();
       }
     } catch (err) {
-      console.error(err);
+      toast(err);
     }
   };
 
@@ -34,7 +35,7 @@ const ManageUsers = () => {
         refetch();
       }
     } catch (err) {
-      console.error(err);
+      toast(err);
     }
   };
 
@@ -74,7 +75,7 @@ const ManageUsers = () => {
               <td>{u.name}</td>
               <td>{u.email}</td>
               <td>{u.role}</td>
-              <td>{new Date(u.createdAt).toLocaleDateString()}</td>
+              <td>{new Date(u.created_at).toLocaleDateString()}</td>
               <td>
                 {u.role === "user" && (
                   <button

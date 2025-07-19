@@ -34,6 +34,7 @@ import PrivateRouter from "../contexts/PrivateRouter";
 import AboutUs from "../pages/AboutUs";
 import TermsOfUse from "../pages/TermsOfUse";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
+import ManageBlog from "../pages/AdminPage/ManageBlog";
 
 
 export const router = createBrowserRouter([
@@ -133,6 +134,10 @@ export const router = createBrowserRouter([
       {
       path: "manage-blogs",
       element: <PrivateRouter><ManageBlogs></ManageBlogs></PrivateRouter> 
+      },
+      {
+      path: "manage-blog",
+      element: <PrivateRouter><ManageBlog></ManageBlog></PrivateRouter> 
       },
       {
       path: "policies-clearance",

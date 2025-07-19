@@ -83,6 +83,7 @@ const Register = () => {
     googleSignIn()
       .then( async (result) => {
         const user = result.user;
+         navigate("/")
          const userInfo = {
                     email: user.email,
                     name: user.displayName,
@@ -101,7 +102,7 @@ const Register = () => {
   draggable: true
 });
           }
-           navigate("/")
+          
       })
        
       .catch(error => {

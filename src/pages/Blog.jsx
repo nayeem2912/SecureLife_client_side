@@ -47,7 +47,7 @@ const Blog = () => {
             <div className="p-4">
               <h3 className="text-xl bg-gradient-to-r from-sky-500 to-blue-600 bg-clip-text text-transparent font-semibold">{blog.title}</h3>
               <p className="text-gray-600 mt-2">
-                {blog.content.split(" ").slice(0, 25).join(" ")}...
+                {blog.summary}...
               </p>
               <div className="flex items-center gap-3 mt-4 text-sm text-gray-500">
                 {blog.authorImage && (

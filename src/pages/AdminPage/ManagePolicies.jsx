@@ -53,7 +53,9 @@ const ManagePolicies = () => {
         minAge: parseInt(data.minAge),
         maxAge: parseInt(data.maxAge),
         coverage: data.coverage,
+        eligibility: data.eligibility,
         termLength: data.termLength,
+        premiumCalculation: data.premiumCalculation,
         basePremium: parseFloat(data.basePremium),
       };
 
@@ -80,6 +82,8 @@ const ManagePolicies = () => {
     setValue("title", policy.title);
     setValue("category", policy.category);
     setValue("shortDescription", policy.shortDescription);
+    setValue("eligibility", policy.eligibility);
+    setValue("premiumCalculation", policy.premiumCalculation);
     setValue("minAge", policy.minAge);
     setValue("maxAge", policy.maxAge);
     setValue("coverage", policy.coverage);
@@ -137,6 +141,8 @@ const ManagePolicies = () => {
               <input {...register("title", { required: true })} className="input input-bordered w-full" placeholder="Policy Title" />
               <input {...register("category", { required: true })} className="input input-bordered w-full" placeholder="Category" />
               <textarea {...register("shortDescription", { required: true })} className="textarea textarea-bordered w-full" placeholder="Description"></textarea>
+              <textarea {...register("eligibility", { required: true })} className="textarea textarea-bordered w-full" placeholder="Eligibility"></textarea>
+              <textarea {...register("premiumCalculation", { required: true })} className="textarea textarea-bordered w-full" placeholder="Premium Calculation"></textarea>
               <div className="grid grid-cols-2 gap-2">
                 <input type="number" {...register("minAge", { required: true })} className="input input-bordered w-full" placeholder="Minimum Age" />
                 <input type="number" {...register("maxAge", { required: true })} className="input input-bordered w-full" placeholder="Maximum Age" />

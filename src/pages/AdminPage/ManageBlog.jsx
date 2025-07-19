@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 
-const ManageBlogs = () => {
+const ManageBlog = () => {
   const { user } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [editBlog, setEditBlog] = useState(null);
@@ -17,9 +17,9 @@ const ManageBlogs = () => {
   const queryClient = useQueryClient();
 
   const { data: blogs = [], isLoading } = useQuery({
-    queryKey: ["agentBlogs", user?.email],
+    queryKey: ["allBlogs"],
     queryFn: async () => {
-      const res = await axios.get(`http://localhost:5000/blogs/agent/${user.email}`);
+      const res = await axios.get(`http://localhost:5000/blogs`);
       return res.data;
     }
   });
@@ -184,4 +184,4 @@ publishDate).toLocaleDateString()}</td>
   );
 };
 
-export default ManageBlogs;
+export default ManageBlog;
