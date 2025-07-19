@@ -62,67 +62,73 @@ const Sidebar = () => {
             
             {role === "admin" && (
           <>
+          <ul className=' text-xl space-y-4'>
             <li>
-              <Link to="/dashboard/manage-applications">
-                <FaUserShield className="inline mr-2" /> Manage Applications
-              </Link>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to="/dashboard/manage-applications">
+                <FaUserShield className="inline text-black mr-2" /> Manage Applications
+              </NavLink>
             </li>
             <li>
-              <Link to="/dashboard/manage-users">
-                <FaUsers className="inline mr-2" /> Manage Users
-              </Link>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to="/dashboard/manage-users">
+                <FaUsers className="inline text-black mr-2" /> Manage Users
+              </NavLink>
             </li>
             <li>
-              <Link to="/dashboard/manage-policies">
-                <FaBlog className="inline mr-2" /> Manage Policies
-              </Link>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to="/dashboard/manage-policies">
+                <FaBlog className="inline text-black mr-2" /> Manage Policies
+              </NavLink>
             </li>
             <li>
-              <Link to="/dashboard/manage-transactions">
-                <FaMoneyCheck className="inline mr-2" /> Transactions
-              </Link>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to="/dashboard/manage-transactions">
+                <FaMoneyCheck className="inline text-black mr-2" /> Transactions
+              </NavLink>
             </li>
-            
+            </ul>
           </>
         )}
 
         {role === "agent" && (
-          <>
+          <> <ul className='space-y-4'>
+
+         
             <li>
-              <Link to="/dashboard/assigned-customers">
-                <FaUsers className="inline mr-2" /> Assigned Customers
-              </Link>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to="/dashboard/assigned-customers">
+                <FaUsers className="inline text-black mr-2" /> Assigned Customers
+              </NavLink>
             </li>
             <li>
-              <Link to="/dashboard/manage-blogs">
-                <FaBlog className="inline mr-2" /> Manage Blogs
-              </Link>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to="/dashboard/manage-blogs">
+                <FaBlog className="inline text-black mr-2" /> Manage Blogs
+              </NavLink>
             </li>
             <li>
-              <Link to="/dashboard/policies-clearance">
-                <FaBlog className="inline mr-2" /> Policy Clearance
-              </Link>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to="/dashboard/policies-clearance">
+                <FaBlog className="inline text-black mr-2" /> Policy Clearance
+              </NavLink>
             </li>
+             </ul>
           </>
         )}
 
         {role === "user" && (
           <>
+          <ul className='space-y-4'>
             <li>
-              <Link to={`/dashboard/my-policies/${user.email}`}>
-                <FaBlog className="inline mr-2" /> My Policies
-              </Link>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to={`/dashboard/my-policies/${user.email}`}>
+                <FaBlog className="inline text-black mr-2" /> My Policies
+              </NavLink>
             </li>
             <li>
-              <Link to={`/dashboard/payment/${user.email}`}>
-                <FaMoneyCheck className="inline mr-2" /> Payment Status
-              </Link>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to={`/dashboard/payment/${user.email}`}>
+                <FaMoneyCheck className="inline text-black mr-2" /> Payment Status
+              </NavLink>
             </li>
             <li>
-              <Link to={`/dashboard/claim-request/${user.email}`}>
-                <FaUserShield className="inline mr-2" /> Claim Request
-              </Link>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to={`/dashboard/claim-request/${user.email}`}>
+                <FaUserShield className="inline text-black mr-2" /> Claim Request
+              </NavLink>
             </li>
+            </ul>
           </>
         )}
               
