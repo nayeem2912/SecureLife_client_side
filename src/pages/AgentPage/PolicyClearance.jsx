@@ -21,7 +21,6 @@ const PolicyClearance = () => {
     try {
       const res = await axios.get(`https://life-insurance-management-server.vercel.app/applications/${policyId}`);
       setPolicyDetails(res.data);
-      toast(res.data)
     } catch (err) {
       toast("Failed to fetch policy", err);
     }
