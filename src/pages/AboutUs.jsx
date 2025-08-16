@@ -11,6 +11,7 @@ const AboutUs = () => {
         </p>
       </div>
 
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         <div className="bg-blue-50 p-6 rounded-xl shadow hover:shadow-md transition">
           <FaShieldAlt className="text-blue-600 text-4xl mb-4 mx-auto" />
