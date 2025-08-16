@@ -86,6 +86,8 @@ const PolicyClearance = () => {
         </tbody>
       </table>
        </div>
+
+       
       {/* Modal */}
       {showModal && policyDetails && (
         <dialog open className="modal">
