@@ -35,6 +35,7 @@ import AboutUs from "../pages/AboutUs";
 import TermsOfUse from "../pages/TermsOfUse";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import ManageBlog from "../pages/AdminPage/ManageBlog";
+import ProfileCard from "../components/ProfileCard";
 
 
 export const router = createBrowserRouter([
@@ -158,6 +159,10 @@ export const router = createBrowserRouter([
       {
         path:"pay/:id",
         element: <PrivateRouter><PayPolicy></PayPolicy></PrivateRouter> 
+      },
+      {
+        path:"profile/:email",
+        element: <PrivateRouter><ProfileCard></ProfileCard></PrivateRouter> 
       }
 
     ]

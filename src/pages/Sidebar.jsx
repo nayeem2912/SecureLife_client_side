@@ -88,6 +88,11 @@ const Sidebar = () => {
                 <FaBlog className="inline text-black mr-2" /> Manage Blogs
               </NavLink>
             </li>
+            <li>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to={`/dashboard/profile/${user.email}`}>
+                <FaBlog className="inline text-black mr-2" /> My Profile
+              </NavLink>
+            </li>
             </ul>
           </>
         )}
@@ -98,17 +103,22 @@ const Sidebar = () => {
          
             <li>
               <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to="/dashboard/assigned-customers">
-                <FaUsers className="inline text-black mr-2" /> Assigned Customers
+                <FaUsers className="inline text-sky-500 mr-2" /> Assigned Customers
               </NavLink>
             </li>
             <li>
               <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to="/dashboard/manage-blogs">
-                <FaBlog className="inline text-black mr-2" /> Manage Blogs
+                <FaBlog className="inline text-sky-500 mr-2" /> Manage Blogs
               </NavLink>
             </li>
             <li>
               <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to="/dashboard/policies-clearance">
-                <FaBlog className="inline text-black mr-2" /> Policy Clearance
+                <FaBlog className="inline text-sky-500 mr-2" /> Policy Clearance
+              </NavLink>
+            </li>
+            <li>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to={`/dashboard/profile/${user.email}`}>
+                <FaBlog className="inline text-sky-500 mr-2" /> My Profile
               </NavLink>
             </li>
              </ul>
@@ -131,6 +141,11 @@ const Sidebar = () => {
             <li>
               <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to={`/dashboard/claim-request/${user.email}`}>
                 <FaUserShield className="inline text-black mr-2" /> Claim Request
+              </NavLink>
+            </li>
+            <li>
+              <NavLink className={({isActive}) =>(isActive? 'bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent text-xl':'text-xl')} to={`/dashboard/profile/${user.email}`}>
+                <FaBlog className="inline text-black mr-2" /> My Profile
               </NavLink>
             </li>
             </ul>

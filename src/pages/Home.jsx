@@ -9,6 +9,7 @@ import CustomerReviews from '../components/Section/CustomerReviews';
 import LatestBlogs from '../components/Section/LatestBlogs';
 import NewsletterSubscription from '../components/Section/NewsletterSubscription';
 import AgentSection from '../components/Section/AgentSection';
+import StatisticsSection from '../components/StatisticsSection';
 
 const Home = () => {
     useEffect(() => {
@@ -25,6 +26,7 @@ const Home = () => {
             <CustomerReviews></CustomerReviews>
             <LatestBlogs></LatestBlogs>
             <AgentSection></AgentSection>
+            <StatisticsSection></StatisticsSection>
             <NewsletterSubscription></NewsletterSubscription>
         </div>
     );
