@@ -10,6 +10,7 @@ import LatestBlogs from '../components/Section/LatestBlogs';
 import NewsletterSubscription from '../components/Section/NewsletterSubscription';
 import AgentSection from '../components/Section/AgentSection';
 import StatisticsSection from '../components/StatisticsSection';
+import HowItWorks from '../components/Section/HowItWorks';
 
 const Home = () => {
     useEffect(() => {
@@ -23,9 +24,10 @@ const Home = () => {
             <HeroSection></HeroSection>
             <PopularPolicies></PopularPolicies>
             <Benefits></Benefits>
-            <CustomerReviews></CustomerReviews>
+            <HowItWorks></HowItWorks>
             <LatestBlogs></LatestBlogs>
             <AgentSection></AgentSection>
+            <CustomerReviews></CustomerReviews>
             <StatisticsSection></StatisticsSection>
             <NewsletterSubscription></NewsletterSubscription>
         </div>
