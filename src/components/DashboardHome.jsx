@@ -3,6 +3,7 @@ import { FaUserShield, FaBriefcase, FaMoneyBill } from "react-icons/fa";
 import { motion } from "framer-motion";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
+import Overview from "./Overview";
 
 
 const DashboardHome = () => {
@@ -48,7 +49,9 @@ const DashboardHome = () => {
         <p className="mt-2 text-sm opacity-90">Today is {date}</p>
       </div>
 
-      
+      <div>
+        <Overview></Overview>
+      </div>
     </div>
   );
 };
